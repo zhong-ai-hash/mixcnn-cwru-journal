@@ -1,0 +1,345 @@
+{
+ "runs": 12,
+ "groups": {
+  "base|clean": {
+   "n": 3,
+   "folds": [
+    "1000"
+   ],
+   "metrics": {
+    "acc_clean": {
+     "mean": 82.0,
+     "sd": 3.91,
+     "ci95_low": 72.3,
+     "ci95_high": 91.7,
+     "fold_means": {
+      "1000": 82.0
+     },
+     "mean_speed": 82.0,
+     "sd_across_speeds": 0.0
+    },
+    "f1_clean": {
+     "mean": 79.52,
+     "sd": 5.31,
+     "ci95_low": 66.34,
+     "ci95_high": 92.7,
+     "fold_means": {
+      "1000": 79.52
+     },
+     "mean_speed": 79.52,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_-4": {
+     "mean": 30.82,
+     "sd": 8.6,
+     "ci95_low": 9.44,
+     "ci95_high": 52.19,
+     "fold_means": {
+      "1000": 30.82
+     },
+     "mean_speed": 30.82,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_0": {
+     "mean": 35.3,
+     "sd": 9.5,
+     "ci95_low": 11.71,
+     "ci95_high": 58.89,
+     "fold_means": {
+      "1000": 35.3
+     },
+     "mean_speed": 35.3,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_4": {
+     "mean": 47.22,
+     "sd": 5.43,
+     "ci95_low": 33.72,
+     "ci95_high": 60.71,
+     "fold_means": {
+      "1000": 47.22
+     },
+     "mean_speed": 47.22,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_8": {
+     "mean": 67.73,
+     "sd": 5.74,
+     "ci95_low": 53.46,
+     "ci95_high": 82.0,
+     "fold_means": {
+      "1000": 67.73
+     },
+     "mean_speed": 67.73,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_12": {
+     "mean": 76.45,
+     "sd": 4.42,
+     "ci95_low": 65.47,
+     "ci95_high": 87.43,
+     "fold_means": {
+      "1000": 76.45
+     },
+     "mean_speed": 76.45,
+     "sd_across_speeds": 0.0
+    }
+   }
+  },
+  "base|noise": {
+   "n": 3,
+   "folds": [
+    "1000"
+   ],
+   "metrics": {
+    "acc_clean": {
+     "mean": 77.83,
+     "sd": 3.62,
+     "ci95_low": 68.85,
+     "ci95_high": 86.82,
+     "fold_means": {
+      "1000": 77.83
+     },
+     "mean_speed": 77.83,
+     "sd_across_speeds": 0.0
+    },
+    "f1_clean": {
+     "mean": 77.97,
+     "sd": 3.35,
+     "ci95_low": 69.66,
+     "ci95_high": 86.28,
+     "fold_means": {
+      "1000": 77.97
+     },
+     "mean_speed": 77.97,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_-4": {
+     "mean": 28.5,
+     "sd": 0.48,
+     "ci95_low": 27.32,
+     "ci95_high": 29.68,
+     "fold_means": {
+      "1000": 28.5
+     },
+     "mean_speed": 28.5,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_0": {
+     "mean": 40.8,
+     "sd": 1.06,
+     "ci95_low": 38.16,
+     "ci95_high": 43.44,
+     "fold_means": {
+      "1000": 40.8
+     },
+     "mean_speed": 40.8,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_4": {
+     "mean": 55.75,
+     "sd": 3.44,
+     "ci95_low": 47.21,
+     "ci95_high": 64.29,
+     "fold_means": {
+      "1000": 55.75
+     },
+     "mean_speed": 55.75,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_8": {
+     "mean": 70.25,
+     "sd": 5.52,
+     "ci95_low": 56.55,
+     "ci95_high": 83.95,
+     "fold_means": {
+      "1000": 70.25
+     },
+     "mean_speed": 70.25,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_12": {
+     "mean": 74.85,
+     "sd": 3.86,
+     "ci95_low": 65.27,
+     "ci95_high": 84.43,
+     "fold_means": {
+      "1000": 74.85
+     },
+     "mean_speed": 74.85,
+     "sd_across_speeds": 0.0
+    }
+   }
+  },
+  "noPad|clean": {
+   "n": 3,
+   "folds": [
+    "1000"
+   ],
+   "metrics": {
+    "acc_clean": {
+     "mean": 81.83,
+     "sd": 3.69,
+     "ci95_low": 72.68,
+     "ci95_high": 90.99,
+     "fold_means": {
+      "1000": 81.83
+     },
+     "mean_speed": 81.83,
+     "sd_across_speeds": 0.0
+    },
+    "f1_clean": {
+     "mean": 79.99,
+     "sd": 4.26,
+     "ci95_low": 69.41,
+     "ci95_high": 90.56,
+     "fold_means": {
+      "1000": 79.99
+     },
+     "mean_speed": 79.99,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_-4": {
+     "mean": 34.52,
+     "sd": 15.75,
+     "ci95_low": -4.62,
+     "ci95_high": 73.65,
+     "fold_means": {
+      "1000": 34.52
+     },
+     "mean_speed": 34.52,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_0": {
+     "mean": 35.27,
+     "sd": 12.07,
+     "ci95_low": 5.29,
+     "ci95_high": 65.24,
+     "fold_means": {
+      "1000": 35.27
+     },
+     "mean_speed": 35.27,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_4": {
+     "mean": 48.72,
+     "sd": 9.1,
+     "ci95_low": 26.12,
+     "ci95_high": 71.32,
+     "fold_means": {
+      "1000": 48.72
+     },
+     "mean_speed": 48.72,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_8": {
+     "mean": 64.03,
+     "sd": 11.23,
+     "ci95_low": 36.12,
+     "ci95_high": 91.94,
+     "fold_means": {
+      "1000": 64.03
+     },
+     "mean_speed": 64.03,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_12": {
+     "mean": 73.6,
+     "sd": 7.37,
+     "ci95_low": 55.29,
+     "ci95_high": 91.91,
+     "fold_means": {
+      "1000": 73.6
+     },
+     "mean_speed": 73.6,
+     "sd_across_speeds": 0.0
+    }
+   }
+  },
+  "noPad|noise": {
+   "n": 3,
+   "folds": [
+    "1000"
+   ],
+   "metrics": {
+    "acc_clean": {
+     "mean": 78.67,
+     "sd": 4.65,
+     "ci95_low": 67.13,
+     "ci95_high": 90.21,
+     "fold_means": {
+      "1000": 78.67
+     },
+     "mean_speed": 78.67,
+     "sd_across_speeds": 0.0
+    },
+    "f1_clean": {
+     "mean": 78.43,
+     "sd": 5.13,
+     "ci95_low": 65.67,
+     "ci95_high": 91.18,
+     "fold_means": {
+      "1000": 78.43
+     },
+     "mean_speed": 78.43,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_-4": {
+     "mean": 31.25,
+     "sd": 4.42,
+     "ci95_low": 20.28,
+     "ci95_high": 42.22,
+     "fold_means": {
+      "1000": 31.25
+     },
+     "mean_speed": 31.25,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_0": {
+     "mean": 43.03,
+     "sd": 3.38,
+     "ci95_low": 34.63,
+     "ci95_high": 51.44,
+     "fold_means": {
+      "1000": 43.03
+     },
+     "mean_speed": 43.03,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_4": {
+     "mean": 57.82,
+     "sd": 6.01,
+     "ci95_low": 42.89,
+     "ci95_high": 72.74,
+     "fold_means": {
+      "1000": 57.82
+     },
+     "mean_speed": 57.82,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_8": {
+     "mean": 68.7,
+     "sd": 7.06,
+     "ci95_low": 51.16,
+     "ci95_high": 86.24,
+     "fold_means": {
+      "1000": 68.7
+     },
+     "mean_speed": 68.7,
+     "sd_across_speeds": 0.0
+    },
+    "acc_snr_12": {
+     "mean": 73.62,
+     "sd": 5.2,
+     "ci95_low": 60.7,
+     "ci95_high": 86.53,
+     "fold_means": {
+      "1000": 73.62
+     },
+     "mean_speed": 73.62,
+     "sd_across_speeds": 0.0
+    }
+   }
+  }
+ }
+}

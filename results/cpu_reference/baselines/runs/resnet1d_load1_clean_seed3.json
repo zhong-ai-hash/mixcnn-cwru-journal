@@ -1,0 +1,27 @@
+{
+ "model": "resnet1d",
+ "fold": "load1",
+ "cond": "clean",
+ "seed": 3,
+ "split_seed": 2026,
+ "n_train": 1350,
+ "n_test": 500,
+ "params": 100554,
+ "flops": 50791680,
+ "secs": 189.5,
+ "pre": {
+  "acc_clean": 90.0,
+  "f1_clean": 86.27,
+  "acc_snr_-4": 24.98,
+  "std_snr_-4": 0.62,
+  "acc_snr_0": 39.36,
+  "std_snr_0": 0.28,
+  "acc_snr_4": 50.1,
+  "std_snr_4": 0.47,
+  "acc_snr_8": 77.76,
+  "std_snr_8": 0.43,
+  "acc_snr_12": 95.4,
+  "std_snr_12": 0.68
+ },
+ "complete": true
+}

@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.tools/
+.DS_Store
+Thumbs.db
+*.pt
+*.pth
+results/gpu/**/preds/
+results/gpu/**/logs/
+data/*_raw/

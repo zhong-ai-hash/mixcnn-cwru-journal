@@ -1,0 +1,31 @@
+{
+ "fold": "load0",
+ "variant": "base",
+ "cond": "clean",
+ "seed": 2,
+ "eval_seed": 50000,
+ "eval_snrs": [
+  -4.0,
+  0.0,
+  4.0,
+  8.0,
+  12.0
+ ],
+ "n_test": 500,
+ "pre": {
+  "acc_clean": 97.6,
+  "f1_clean": 97.59,
+  "acc_snr_-4": 13.2,
+  "std_snr_-4": 0.46,
+  "acc_snr_0": 35.38,
+  "std_snr_0": 0.71,
+  "acc_snr_4": 61.0,
+  "std_snr_4": 0.82,
+  "acc_snr_8": 93.4,
+  "std_snr_8": 0.28,
+  "acc_snr_12": 98.4,
+  "std_snr_12": 0.27
+ },
+ "secs": 993.2,
+ "complete": true
+}

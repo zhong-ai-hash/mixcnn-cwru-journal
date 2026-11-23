@@ -1,0 +1,21 @@
+{
+ "arm": "recording_leak",
+ "variant": "noPad",
+ "cond": "clean",
+ "seed": 1,
+ "eval_snrs": [
+  0.0
+ ],
+ "n_train": 1500,
+ "n_test": 250,
+ "params": 81674,
+ "secs": 753.0,
+ "pre": {
+  "acc_clean": 99.2,
+  "f1_clean": 99.2,
+  "acc_snr_0": 64.64,
+  "std_snr_0": 1.19
+ },
+ "test_recording_overlap": 10,
+ "complete": true
+}

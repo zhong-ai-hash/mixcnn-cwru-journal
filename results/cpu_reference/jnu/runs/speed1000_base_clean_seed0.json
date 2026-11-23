@@ -1,0 +1,28 @@
+{
+ "fold": "1000",
+ "held_out_speed": 1000,
+ "variant": "base",
+ "cond": "clean",
+ "seed": 0,
+ "n_train": 360,
+ "n_test": 200,
+ "params": 80900,
+ "flops": 272573440,
+ "secs": 1545.2,
+ "pre": {
+  "acc_clean": 80.0,
+  "f1_clean": 77.06,
+  "acc_snr_-4": 40.7,
+  "std_snr_-4": 0.6,
+  "acc_snr_0": 43.8,
+  "std_snr_0": 0.4,
+  "acc_snr_4": 53.3,
+  "std_snr_4": 1.35,
+  "acc_snr_8": 71.0,
+  "std_snr_8": 1.16,
+  "acc_snr_12": 77.5,
+  "std_snr_12": 0.5
+ },
+ "test_recording_overlap": 0,
+ "complete": true
+}

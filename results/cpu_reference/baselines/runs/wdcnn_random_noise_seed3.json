@@ -1,0 +1,27 @@
+{
+ "model": "wdcnn",
+ "fold": "random",
+ "cond": "noise",
+ "seed": 3,
+ "split_seed": 2026,
+ "n_train": 1400,
+ "n_test": 400,
+ "params": 35290,
+ "flops": 723456,
+ "secs": 12.8,
+ "pre": {
+  "acc_clean": 84.0,
+  "f1_clean": 82.48,
+  "acc_snr_-4": 64.65,
+  "std_snr_-4": 1.98,
+  "acc_snr_0": 86.62,
+  "std_snr_0": 0.68,
+  "acc_snr_4": 87.9,
+  "std_snr_4": 0.58,
+  "acc_snr_8": 85.35,
+  "std_snr_8": 1.01,
+  "acc_snr_12": 84.47,
+  "std_snr_12": 0.77
+ },
+ "complete": true
+}

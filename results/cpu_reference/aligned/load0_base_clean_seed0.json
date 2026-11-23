@@ -1,0 +1,37 @@
+{
+ "fold": "load0",
+ "variant": "base",
+ "cond": "clean",
+ "seed": 0,
+ "eval_seed": 50000,
+ "eval_snrs": [
+  0.0
+ ],
+ "sections": {
+  "at": {
+   "acc_clean": 88.6,
+   "f1_clean": 88.07,
+   "acc_snr_0": 39.86,
+   "std_snr_0": 0.72
+  },
+  "bn_clean": {
+   "acc_clean": 88.2,
+   "f1_clean": 87.55,
+   "acc_snr_0": 42.28,
+   "std_snr_0": 0.63
+  },
+  "bn_noise_0": {
+   "acc_clean": 79.6,
+   "f1_clean": 75.81,
+   "acc_snr_0": 78.34,
+   "std_snr_0": 0.7
+  },
+  "bn_noise_4": {
+   "acc_clean": 88.6,
+   "f1_clean": 87.9,
+   "acc_snr_0": 54.42,
+   "std_snr_0": 0.67
+  }
+ },
+ "complete": true
+}

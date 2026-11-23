@@ -1,0 +1,59 @@
+{
+ "fold": "random",
+ "held_out_load": null,
+ "split_seed": 2026,
+ "n_total": 2000,
+ "n_train": 1400,
+ "n_val": 200,
+ "n_test": 400,
+ "class_counts_train": [
+  140,
+  140,
+  140,
+  140,
+  140,
+  140,
+  140,
+  140,
+  140,
+  140
+ ],
+ "class_counts_val": [
+  20,
+  20,
+  20,
+  20,
+  20,
+  20,
+  20,
+  20,
+  20,
+  20
+ ],
+ "class_counts_test": [
+  40,
+  40,
+  40,
+  40,
+  40,
+  40,
+  40,
+  40,
+  40,
+  40
+ ],
+ "train_loads": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "test_loads": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "scaler": "StandardScaler fit on the training split only",
+ "data_sha256": "34c795915c70eea3ed2439f5a670fac76e7b4b46214dc3a6febe0d980d0c4aa9"
+}

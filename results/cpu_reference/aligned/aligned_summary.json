@@ -1,0 +1,905 @@
+{
+ "eval_seed": 50000,
+ "eval_snrs": [
+  0.0
+ ],
+ "runs": 100,
+ "groups": {
+  "base|clean": {
+   "n": 25,
+   "folds": [
+    "load0",
+    "load1",
+    "load2",
+    "load3",
+    "random"
+   ],
+   "sections": {
+    "at": {
+     "acc_clean": {
+      "mean": 96.81,
+      "sd": 3.92,
+      "ci95_low": 95.19,
+      "ci95_high": 98.43,
+      "fold_means": {
+       "load0": 93.64,
+       "load1": 94.24,
+       "load2": 100.0,
+       "load3": 96.32,
+       "random": 99.85
+      },
+      "mean_lobo": 96.05,
+      "sd_across_lobo_folds": 2.87,
+      "random_mean": 99.85,
+      "mean_within_fold_sd": 2.89
+     },
+     "f1_clean": {
+      "mean": 96.44,
+      "sd": 4.52,
+      "ci95_low": 94.58,
+      "ci95_high": 98.3,
+      "fold_means": {
+       "load0": 93.45,
+       "load1": 93.34,
+       "load2": 100.0,
+       "load3": 95.56,
+       "random": 99.85
+      },
+      "mean_lobo": 95.59,
+      "sd_across_lobo_folds": 3.11,
+      "random_mean": 99.85,
+      "mean_within_fold_sd": 3.5
+     },
+     "acc_snr_0": {
+      "mean": 31.13,
+      "sd": 9.61,
+      "ci95_low": 27.16,
+      "ci95_high": 35.09,
+      "fold_means": {
+       "load0": 29.62,
+       "load1": 33.2,
+       "load2": 32.71,
+       "load3": 31.74,
+       "random": 28.37
+      },
+      "mean_lobo": 31.82,
+      "sd_across_lobo_folds": 1.59,
+      "random_mean": 28.37,
+      "mean_within_fold_sd": 10.58
+     }
+    },
+    "bn_clean": {
+     "acc_clean": {
+      "mean": 96.66,
+      "sd": 4.04,
+      "ci95_low": 94.99,
+      "ci95_high": 98.33,
+      "fold_means": {
+       "load0": 93.0,
+       "load1": 94.08,
+       "load2": 100.0,
+       "load3": 96.36,
+       "random": 99.85
+      },
+      "mean_lobo": 95.86,
+      "sd_across_lobo_folds": 3.1,
+      "random_mean": 99.85,
+      "mean_within_fold_sd": 2.89
+     },
+     "f1_clean": {
+      "mean": 96.26,
+      "sd": 4.66,
+      "ci95_low": 94.34,
+      "ci95_high": 98.18,
+      "fold_means": {
+       "load0": 92.75,
+       "load1": 93.11,
+       "load2": 100.0,
+       "load3": 95.58,
+       "random": 99.85
+      },
+      "mean_lobo": 95.36,
+      "sd_across_lobo_folds": 3.34,
+      "random_mean": 99.85,
+      "mean_within_fold_sd": 3.52
+     },
+     "acc_snr_0": {
+      "mean": 30.75,
+      "sd": 9.75,
+      "ci95_low": 26.73,
+      "ci95_high": 34.78,
+      "fold_means": {
+       "load0": 28.95,
+       "load1": 32.6,
+       "load2": 32.58,
+       "load3": 30.12,
+       "random": 29.51
+      },
+      "mean_lobo": 31.06,
+      "sd_across_lobo_folds": 1.83,
+      "random_mean": 29.51,
+      "mean_within_fold_sd": 10.03
+     }
+    },
+    "bn_noise_0": {
+     "acc_clean": {
+      "mean": 83.66,
+      "sd": 4.34,
+      "ci95_low": 81.87,
+      "ci95_high": 85.46,
+      "fold_means": {
+       "load0": 79.76,
+       "load1": 79.32,
+       "load2": 87.36,
+       "load3": 85.72,
+       "random": 86.15
+      },
+      "mean_lobo": 83.04,
+      "sd_across_lobo_folds": 4.1,
+      "random_mean": 86.15,
+      "mean_within_fold_sd": 2.55
+     },
+     "f1_clean": {
+      "mean": 80.06,
+      "sd": 5.08,
+      "ci95_low": 77.96,
+      "ci95_high": 82.15,
+      "fold_means": {
+       "load0": 75.62,
+       "load1": 74.61,
+       "load2": 84.29,
+       "load3": 82.62,
+       "random": 83.13
+      },
+      "mean_lobo": 79.29,
+      "sd_across_lobo_folds": 4.88,
+      "random_mean": 83.13,
+      "mean_within_fold_sd": 2.81
+     },
+     "acc_snr_0": {
+      "mean": 87.46,
+      "sd": 6.98,
+      "ci95_low": 84.58,
+      "ci95_high": 90.35,
+      "fold_means": {
+       "load0": 77.48,
+       "load1": 87.92,
+       "load2": 90.95,
+       "load3": 88.53,
+       "random": 92.45
+      },
+      "mean_lobo": 86.22,
+      "sd_across_lobo_folds": 5.97,
+      "random_mean": 92.45,
+      "mean_within_fold_sd": 4.44
+     }
+    },
+    "bn_noise_4": {
+     "acc_clean": {
+      "mean": 94.43,
+      "sd": 5.86,
+      "ci95_low": 92.01,
+      "ci95_high": 96.85,
+      "fold_means": {
+       "load0": 88.04,
+       "load1": 88.6,
+       "load2": 98.52,
+       "load3": 99.68,
+       "random": 97.3
+      },
+      "mean_lobo": 93.71,
+      "sd_across_lobo_folds": 6.25,
+      "random_mean": 97.3,
+      "mean_within_fold_sd": 2.58
+     },
+     "f1_clean": {
+      "mean": 93.67,
+      "sd": 6.76,
+      "ci95_low": 90.88,
+      "ci95_high": 96.46,
+      "fold_means": {
+       "load0": 87.15,
+       "load1": 85.87,
+       "load2": 98.47,
+       "load3": 99.68,
+       "random": 97.2
+      },
+      "mean_lobo": 92.79,
+      "sd_across_lobo_folds": 7.29,
+      "random_mean": 97.2,
+      "mean_within_fold_sd": 2.78
+     },
+     "acc_snr_0": {
+      "mean": 65.0,
+      "sd": 11.2,
+      "ci95_low": 60.38,
+      "ci95_high": 69.63,
+      "fold_means": {
+       "load0": 52.54,
+       "load1": 72.86,
+       "load2": 71.6,
+       "load3": 56.85,
+       "random": 71.17
+      },
+      "mean_lobo": 63.46,
+      "sd_across_lobo_folds": 10.29,
+      "random_mean": 71.17,
+      "mean_within_fold_sd": 7.69
+     }
+    }
+   }
+  },
+  "base|noise": {
+   "n": 25,
+   "folds": [
+    "load0",
+    "load1",
+    "load2",
+    "load3",
+    "random"
+   ],
+   "sections": {
+    "at": {
+     "acc_clean": {
+      "mean": 98.55,
+      "sd": 1.67,
+      "ci95_low": 97.86,
+      "ci95_high": 99.24,
+      "fold_means": {
+       "load0": 97.52,
+       "load1": 96.44,
+       "load2": 100.0,
+       "load3": 99.08,
+       "random": 99.7
+      },
+      "mean_lobo": 98.26,
+      "sd_across_lobo_folds": 1.59,
+      "random_mean": 99.7,
+      "mean_within_fold_sd": 0.92
+     },
+     "f1_clean": {
+      "mean": 98.51,
+      "sd": 1.76,
+      "ci95_low": 97.78,
+      "ci95_high": 99.23,
+      "fold_means": {
+       "load0": 97.5,
+       "load1": 96.26,
+       "load2": 100.0,
+       "load3": 99.07,
+       "random": 99.7
+      },
+      "mean_lobo": 98.21,
+      "sd_across_lobo_folds": 1.66,
+      "random_mean": 99.7,
+      "mean_within_fold_sd": 0.98
+     },
+     "acc_snr_0": {
+      "mean": 97.89,
+      "sd": 1.95,
+      "ci95_low": 97.08,
+      "ci95_high": 98.69,
+      "fold_means": {
+       "load0": 95.41,
+       "load1": 96.46,
+       "load2": 99.76,
+       "load3": 98.68,
+       "random": 99.13
+      },
+      "mean_lobo": 97.58,
+      "sd_across_lobo_folds": 2.0,
+      "random_mean": 99.13,
+      "mean_within_fold_sd": 0.93
+     }
+    },
+    "bn_clean": {
+     "acc_clean": {
+      "mean": 97.45,
+      "sd": 1.99,
+      "ci95_low": 96.62,
+      "ci95_high": 98.27,
+      "fold_means": {
+       "load0": 95.08,
+       "load1": 97.88,
+       "load2": 99.52,
+       "load3": 96.4,
+       "random": 98.35
+      },
+      "mean_lobo": 97.22,
+      "sd_across_lobo_folds": 1.91,
+      "random_mean": 98.35,
+      "mean_within_fold_sd": 1.12
+     },
+     "f1_clean": {
+      "mean": 97.44,
+      "sd": 2.0,
+      "ci95_low": 96.61,
+      "ci95_high": 98.26,
+      "fold_means": {
+       "load0": 95.06,
+       "load1": 97.86,
+       "load2": 99.52,
+       "load3": 96.41,
+       "random": 98.34
+      },
+      "mean_lobo": 97.21,
+      "sd_across_lobo_folds": 1.92,
+      "random_mean": 98.34,
+      "mean_within_fold_sd": 1.12
+     },
+     "acc_snr_0": {
+      "mean": 88.42,
+      "sd": 4.66,
+      "ci95_low": 86.49,
+      "ci95_high": 90.34,
+      "fold_means": {
+       "load0": 87.11,
+       "load1": 89.69,
+       "load2": 91.94,
+       "load3": 83.08,
+       "random": 90.26
+      },
+      "mean_lobo": 87.96,
+      "sd_across_lobo_folds": 3.8,
+      "random_mean": 90.26,
+      "mean_within_fold_sd": 3.76
+     }
+    },
+    "bn_noise_0": {
+     "acc_clean": {
+      "mean": 98.19,
+      "sd": 2.07,
+      "ci95_low": 97.34,
+      "ci95_high": 99.04,
+      "fold_means": {
+       "load0": 97.44,
+       "load1": 95.12,
+       "load2": 99.92,
+       "load3": 98.72,
+       "random": 99.75
+      },
+      "mean_lobo": 97.8,
+      "sd_across_lobo_folds": 2.05,
+      "random_mean": 99.75,
+      "mean_within_fold_sd": 1.03
+     },
+     "f1_clean": {
+      "mean": 98.1,
+      "sd": 2.25,
+      "ci95_low": 97.16,
+      "ci95_high": 99.03,
+      "fold_means": {
+       "load0": 97.41,
+       "load1": 94.69,
+       "load2": 99.92,
+       "load3": 98.7,
+       "random": 99.75
+      },
+      "mean_lobo": 97.68,
+      "sd_across_lobo_folds": 2.24,
+      "random_mean": 99.75,
+      "mean_within_fold_sd": 1.12
+     },
+     "acc_snr_0": {
+      "mean": 97.71,
+      "sd": 2.09,
+      "ci95_low": 96.85,
+      "ci95_high": 98.57,
+      "fold_means": {
+       "load0": 95.54,
+       "load1": 95.29,
+       "load2": 99.71,
+       "load3": 98.72,
+       "random": 99.31
+      },
+      "mean_lobo": 97.31,
+      "sd_across_lobo_folds": 2.23,
+      "random_mean": 99.31,
+      "mean_within_fold_sd": 0.74
+     }
+    },
+    "bn_noise_4": {
+     "acc_clean": {
+      "mean": 98.37,
+      "sd": 1.71,
+      "ci95_low": 97.66,
+      "ci95_high": 99.07,
+      "fold_means": {
+       "load0": 97.28,
+       "load1": 96.2,
+       "load2": 99.96,
+       "load3": 98.8,
+       "random": 99.6
+      },
+      "mean_lobo": 98.06,
+      "sd_across_lobo_folds": 1.66,
+      "random_mean": 99.6,
+      "mean_within_fold_sd": 0.98
+     },
+     "f1_clean": {
+      "mean": 98.32,
+      "sd": 1.79,
+      "ci95_low": 97.59,
+      "ci95_high": 99.06,
+      "fold_means": {
+       "load0": 97.28,
+       "load1": 96.0,
+       "load2": 99.96,
+       "load3": 98.78,
+       "random": 99.6
+      },
+      "mean_lobo": 98.0,
+      "sd_across_lobo_folds": 1.73,
+      "random_mean": 99.6,
+      "mean_within_fold_sd": 1.02
+     },
+     "acc_snr_0": {
+      "mean": 97.39,
+      "sd": 2.02,
+      "ci95_low": 96.55,
+      "ci95_high": 98.22,
+      "fold_means": {
+       "load0": 94.58,
+       "load1": 97.1,
+       "load2": 99.66,
+       "load3": 97.01,
+       "random": 98.59
+      },
+      "mean_lobo": 97.09,
+      "sd_across_lobo_folds": 2.07,
+      "random_mean": 98.59,
+      "mean_within_fold_sd": 1.07
+     }
+    }
+   }
+  },
+  "noPad|clean": {
+   "n": 25,
+   "folds": [
+    "load0",
+    "load1",
+    "load2",
+    "load3",
+    "random"
+   ],
+   "sections": {
+    "at": {
+     "acc_clean": {
+      "mean": 96.42,
+      "sd": 3.74,
+      "ci95_low": 94.87,
+      "ci95_high": 97.96,
+      "fold_means": {
+       "load0": 93.6,
+       "load1": 92.76,
+       "load2": 99.92,
+       "load3": 95.8,
+       "random": 100.0
+      },
+      "mean_lobo": 95.52,
+      "sd_across_lobo_folds": 3.2,
+      "random_mean": 100.0,
+      "mean_within_fold_sd": 2.13
+     },
+     "f1_clean": {
+      "mean": 96.03,
+      "sd": 4.25,
+      "ci95_low": 94.27,
+      "ci95_high": 97.78,
+      "fold_means": {
+       "load0": 93.3,
+       "load1": 91.32,
+       "load2": 99.92,
+       "load3": 95.58,
+       "random": 100.0
+      },
+      "mean_lobo": 95.03,
+      "sd_across_lobo_folds": 3.69,
+      "random_mean": 100.0,
+      "mean_within_fold_sd": 2.45
+     },
+     "acc_snr_0": {
+      "mean": 60.62,
+      "sd": 7.82,
+      "ci95_low": 57.39,
+      "ci95_high": 63.84,
+      "fold_means": {
+       "load0": 55.32,
+       "load1": 63.03,
+       "load2": 63.12,
+       "load3": 53.75,
+       "random": 67.85
+      },
+      "mean_lobo": 58.81,
+      "sd_across_lobo_folds": 4.97,
+      "random_mean": 67.85,
+      "mean_within_fold_sd": 6.1
+     }
+    },
+    "bn_clean": {
+     "acc_clean": {
+      "mean": 96.41,
+      "sd": 3.75,
+      "ci95_low": 94.87,
+      "ci95_high": 97.96,
+      "fold_means": {
+       "load0": 92.68,
+       "load1": 92.64,
+       "load2": 99.96,
+       "load3": 96.84,
+       "random": 99.95
+      },
+      "mean_lobo": 95.53,
+      "sd_across_lobo_folds": 3.55,
+      "random_mean": 99.95,
+      "mean_within_fold_sd": 1.82
+     },
+     "f1_clean": {
+      "mean": 96.05,
+      "sd": 4.26,
+      "ci95_low": 94.29,
+      "ci95_high": 97.81,
+      "fold_means": {
+       "load0": 92.4,
+       "load1": 91.17,
+       "load2": 99.96,
+       "load3": 96.76,
+       "random": 99.95
+      },
+      "mean_lobo": 95.07,
+      "sd_across_lobo_folds": 4.05,
+      "random_mean": 99.95,
+      "mean_within_fold_sd": 2.12
+     },
+     "acc_snr_0": {
+      "mean": 61.34,
+      "sd": 8.21,
+      "ci95_low": 57.95,
+      "ci95_high": 64.73,
+      "fold_means": {
+       "load0": 56.48,
+       "load1": 64.56,
+       "load2": 65.55,
+       "load3": 53.68,
+       "random": 66.41
+      },
+      "mean_lobo": 60.07,
+      "sd_across_lobo_folds": 5.88,
+      "random_mean": 66.41,
+      "mean_within_fold_sd": 6.85
+     }
+    },
+    "bn_noise_0": {
+     "acc_clean": {
+      "mean": 81.54,
+      "sd": 4.62,
+      "ci95_low": 79.63,
+      "ci95_high": 83.44,
+      "fold_means": {
+       "load0": 75.96,
+       "load1": 85.88,
+       "load2": 81.28,
+       "load3": 81.92,
+       "random": 82.65
+      },
+      "mean_lobo": 81.26,
+      "sd_across_lobo_folds": 4.08,
+      "random_mean": 82.65,
+      "mean_within_fold_sd": 3.59
+     },
+     "f1_clean": {
+      "mean": 76.87,
+      "sd": 5.58,
+      "ci95_low": 74.57,
+      "ci95_high": 79.18,
+      "fold_means": {
+       "load0": 70.49,
+       "load1": 82.16,
+       "load2": 76.64,
+       "load3": 76.85,
+       "random": 78.22
+      },
+      "mean_lobo": 76.53,
+      "sd_across_lobo_folds": 4.77,
+      "random_mean": 78.22,
+      "mean_within_fold_sd": 4.41
+     },
+     "acc_snr_0": {
+      "mean": 96.15,
+      "sd": 3.25,
+      "ci95_low": 94.81,
+      "ci95_high": 97.5,
+      "fold_means": {
+       "load0": 91.66,
+       "load1": 95.58,
+       "load2": 99.54,
+       "load3": 95.32,
+       "random": 98.66
+      },
+      "mean_lobo": 95.53,
+      "sd_across_lobo_folds": 3.22,
+      "random_mean": 98.66,
+      "mean_within_fold_sd": 1.66
+     }
+    },
+    "bn_noise_4": {
+     "acc_clean": {
+      "mean": 93.22,
+      "sd": 5.07,
+      "ci95_low": 91.13,
+      "ci95_high": 95.31,
+      "fold_means": {
+       "load0": 87.52,
+       "load1": 91.08,
+       "load2": 95.0,
+       "load3": 97.36,
+       "random": 95.15
+      },
+      "mean_lobo": 92.74,
+      "sd_across_lobo_folds": 4.34,
+      "random_mean": 95.15,
+      "mean_within_fold_sd": 3.89
+     },
+     "f1_clean": {
+      "mean": 92.58,
+      "sd": 5.75,
+      "ci95_low": 90.21,
+      "ci95_high": 94.95,
+      "fold_means": {
+       "load0": 87.21,
+       "load1": 89.73,
+       "load2": 94.05,
+       "load3": 97.29,
+       "random": 94.61
+      },
+      "mean_lobo": 92.07,
+      "sd_across_lobo_folds": 4.48,
+      "random_mean": 94.61,
+      "mean_within_fold_sd": 4.61
+     },
+     "acc_snr_0": {
+      "mean": 88.23,
+      "sd": 7.75,
+      "ci95_low": 85.04,
+      "ci95_high": 91.43,
+      "fold_means": {
+       "load0": 78.53,
+       "load1": 90.92,
+       "load2": 95.17,
+       "load3": 81.16,
+       "random": 95.4
+      },
+      "mean_lobo": 86.44,
+      "sd_across_lobo_folds": 7.89,
+      "random_mean": 95.4,
+      "mean_within_fold_sd": 2.92
+     }
+    }
+   }
+  },
+  "noPad|noise": {
+   "n": 25,
+   "folds": [
+    "load0",
+    "load1",
+    "load2",
+    "load3",
+    "random"
+   ],
+   "sections": {
+    "at": {
+     "acc_clean": {
+      "mean": 97.74,
+      "sd": 2.79,
+      "ci95_low": 96.59,
+      "ci95_high": 98.89,
+      "fold_means": {
+       "load0": 96.64,
+       "load1": 93.28,
+       "load2": 99.96,
+       "load3": 99.16,
+       "random": 99.65
+      },
+      "mean_lobo": 97.26,
+      "sd_across_lobo_folds": 3.01,
+      "random_mean": 99.65,
+      "mean_within_fold_sd": 1.02
+     },
+     "f1_clean": {
+      "mean": 97.47,
+      "sd": 3.4,
+      "ci95_low": 96.07,
+      "ci95_high": 98.87,
+      "fold_means": {
+       "load0": 96.53,
+       "load1": 92.05,
+       "load2": 99.96,
+       "load3": 99.16,
+       "random": 99.65
+      },
+      "mean_lobo": 96.92,
+      "sd_across_lobo_folds": 3.56,
+      "random_mean": 99.65,
+      "mean_within_fold_sd": 1.34
+     },
+     "acc_snr_0": {
+      "mean": 97.22,
+      "sd": 2.32,
+      "ci95_low": 96.26,
+      "ci95_high": 98.18,
+      "fold_means": {
+       "load0": 95.29,
+       "load1": 94.48,
+       "load2": 99.64,
+       "load3": 97.41,
+       "random": 99.29
+      },
+      "mean_lobo": 96.71,
+      "sd_across_lobo_folds": 2.31,
+      "random_mean": 99.29,
+      "mean_within_fold_sd": 1.03
+     }
+    },
+    "bn_clean": {
+     "acc_clean": {
+      "mean": 96.54,
+      "sd": 3.86,
+      "ci95_low": 94.94,
+      "ci95_high": 98.13,
+      "fold_means": {
+       "load0": 93.92,
+       "load1": 90.64,
+       "load2": 99.88,
+       "load3": 98.6,
+       "random": 99.65
+      },
+      "mean_lobo": 95.76,
+      "sd_across_lobo_folds": 4.27,
+      "random_mean": 99.65,
+      "mean_within_fold_sd": 1.05
+     },
+     "f1_clean": {
+      "mean": 95.94,
+      "sd": 4.84,
+      "ci95_low": 93.94,
+      "ci95_high": 97.94,
+      "fold_means": {
+       "load0": 93.66,
+       "load1": 87.93,
+       "load2": 99.88,
+       "load3": 98.56,
+       "random": 99.65
+      },
+      "mean_lobo": 95.01,
+      "sd_across_lobo_folds": 5.42,
+      "random_mean": 99.65,
+      "mean_within_fold_sd": 1.29
+     },
+     "acc_snr_0": {
+      "mean": 89.28,
+      "sd": 4.92,
+      "ci95_low": 87.25,
+      "ci95_high": 91.31,
+      "fold_means": {
+       "load0": 88.51,
+       "load1": 92.38,
+       "load2": 90.81,
+       "load3": 83.45,
+       "random": 91.25
+      },
+      "mean_lobo": 88.79,
+      "sd_across_lobo_folds": 3.9,
+      "random_mean": 91.25,
+      "mean_within_fold_sd": 4.07
+     }
+    },
+    "bn_noise_0": {
+     "acc_clean": {
+      "mean": 97.72,
+      "sd": 2.86,
+      "ci95_low": 96.54,
+      "ci95_high": 98.9,
+      "fold_means": {
+       "load0": 97.16,
+       "load1": 93.0,
+       "load2": 99.8,
+       "load3": 99.28,
+       "random": 99.35
+      },
+      "mean_lobo": 97.31,
+      "sd_across_lobo_folds": 3.09,
+      "random_mean": 99.35,
+      "mean_within_fold_sd": 1.11
+     },
+     "f1_clean": {
+      "mean": 97.4,
+      "sd": 3.6,
+      "ci95_low": 95.91,
+      "ci95_high": 98.89,
+      "fold_means": {
+       "load0": 97.07,
+       "load1": 91.5,
+       "load2": 99.8,
+       "load3": 99.28,
+       "random": 99.35
+      },
+      "mean_lobo": 96.91,
+      "sd_across_lobo_folds": 3.8,
+      "random_mean": 99.35,
+      "mean_within_fold_sd": 1.44
+     },
+     "acc_snr_0": {
+      "mean": 97.29,
+      "sd": 2.43,
+      "ci95_low": 96.28,
+      "ci95_high": 98.29,
+      "fold_means": {
+       "load0": 95.79,
+       "load1": 93.97,
+       "load2": 99.68,
+       "load3": 97.7,
+       "random": 99.29
+      },
+      "mean_lobo": 96.78,
+      "sd_across_lobo_folds": 2.46,
+      "random_mean": 99.29,
+      "mean_within_fold_sd": 1.1
+     }
+    },
+    "bn_noise_4": {
+     "acc_clean": {
+      "mean": 96.48,
+      "sd": 3.73,
+      "ci95_low": 94.95,
+      "ci95_high": 98.02,
+      "fold_means": {
+       "load0": 94.08,
+       "load1": 90.68,
+       "load2": 99.84,
+       "load3": 98.72,
+       "random": 99.1
+      },
+      "mean_lobo": 95.83,
+      "sd_across_lobo_folds": 4.24,
+      "random_mean": 99.1,
+      "mean_within_fold_sd": 0.89
+     },
+     "f1_clean": {
+      "mean": 95.85,
+      "sd": 4.73,
+      "ci95_low": 93.89,
+      "ci95_high": 97.8,
+      "fold_means": {
+       "load0": 93.6,
+       "load1": 87.99,
+       "load2": 99.84,
+       "load3": 98.71,
+       "random": 99.09
+      },
+      "mean_lobo": 95.04,
+      "sd_across_lobo_folds": 5.42,
+      "random_mean": 99.09,
+      "mean_within_fold_sd": 1.14
+     },
+     "acc_snr_0": {
+      "mean": 96.93,
+      "sd": 2.54,
+      "ci95_low": 95.88,
+      "ci95_high": 97.98,
+      "fold_means": {
+       "load0": 95.18,
+       "load1": 93.62,
+       "load2": 99.56,
+       "load3": 97.1,
+       "random": 99.19
+      },
+      "mean_lobo": 96.36,
+      "sd_across_lobo_folds": 2.56,
+      "random_mean": 99.19,
+      "mean_within_fold_sd": 1.09
+     }
+    }
+   }
+  }
+ }
+}

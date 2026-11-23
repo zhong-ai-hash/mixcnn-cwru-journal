@@ -1,0 +1,21 @@
+{
+ "arm": "no_overlap",
+ "variant": "base",
+ "cond": "clean",
+ "seed": 0,
+ "eval_snrs": [
+  0.0
+ ],
+ "n_train": 1500,
+ "n_test": 250,
+ "params": 81674,
+ "secs": 2505.0,
+ "pre": {
+  "acc_clean": 86.8,
+  "f1_clean": 86.0,
+  "acc_snr_0": 42.8,
+  "std_snr_0": 1.28
+ },
+ "test_recording_overlap": 0,
+ "complete": true
+}

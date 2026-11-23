@@ -1,0 +1,21 @@
+{
+ "arm": "recording_leak",
+ "variant": "base",
+ "cond": "clean",
+ "seed": 2,
+ "eval_snrs": [
+  0.0
+ ],
+ "n_train": 1500,
+ "n_test": 250,
+ "params": 81674,
+ "secs": 2484.0,
+ "pre": {
+  "acc_clean": 99.2,
+  "f1_clean": 99.19,
+  "acc_snr_0": 44.28,
+  "std_snr_0": 0.84
+ },
+ "test_recording_overlap": 10,
+ "complete": true
+}

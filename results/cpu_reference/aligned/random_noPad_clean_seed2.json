@@ -1,0 +1,37 @@
+{
+ "fold": "random",
+ "variant": "noPad",
+ "cond": "clean",
+ "seed": 2,
+ "eval_seed": 50000,
+ "eval_snrs": [
+  0.0
+ ],
+ "sections": {
+  "at": {
+   "acc_clean": 100.0,
+   "f1_clean": 100.0,
+   "acc_snr_0": 63.65,
+   "std_snr_0": 0.77
+  },
+  "bn_clean": {
+   "acc_clean": 100.0,
+   "f1_clean": 100.0,
+   "acc_snr_0": 64.7,
+   "std_snr_0": 0.99
+  },
+  "bn_noise_0": {
+   "acc_clean": 85.75,
+   "f1_clean": 82.39,
+   "acc_snr_0": 98.5,
+   "std_snr_0": 0.3
+  },
+  "bn_noise_4": {
+   "acc_clean": 92.25,
+   "f1_clean": 91.02,
+   "acc_snr_0": 92.4,
+   "std_snr_0": 0.95
+  }
+ },
+ "complete": true
+}

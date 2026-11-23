@@ -1,0 +1,26 @@
+{
+ "arm": "no_overlap",
+ "variant": "noPad",
+ "cond": "noise",
+ "seed": 0,
+ "n_train": 1500,
+ "n_test": 250,
+ "params": 81674,
+ "secs": 738.0,
+ "pre": {
+  "acc_clean": 98.0,
+  "f1_clean": 97.94,
+  "acc_snr_-4": 88.44,
+  "std_snr_-4": 1.73,
+  "acc_snr_0": 96.08,
+  "std_snr_0": 0.85,
+  "acc_snr_4": 97.56,
+  "std_snr_4": 0.49,
+  "acc_snr_8": 97.76,
+  "std_snr_8": 0.37,
+  "acc_snr_12": 97.64,
+  "std_snr_12": 0.38
+ },
+ "test_recording_overlap": 0,
+ "complete": true
+}

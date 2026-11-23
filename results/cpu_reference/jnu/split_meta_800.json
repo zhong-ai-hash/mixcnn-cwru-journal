@@ -1,0 +1,53 @@
+{
+ "fold": "800",
+ "held_out_speed": 800,
+ "split_seed": 2026,
+ "n_train": 360,
+ "n_val": 40,
+ "n_test": 200,
+ "class_counts_train": [
+  90,
+  90,
+  90,
+  90
+ ],
+ "class_counts_val": [
+  10,
+  10,
+  10,
+  10
+ ],
+ "class_counts_test": [
+  50,
+  50,
+  50,
+  50
+ ],
+ "train_speeds": [
+  600,
+  1000
+ ],
+ "test_speeds": [
+  800
+ ],
+ "train_recording_ids": [
+  0,
+  1,
+  3,
+  4,
+  6,
+  7,
+  9,
+  10
+ ],
+ "test_recording_ids": [
+  2,
+  5,
+  8,
+  11
+ ],
+ "train_test_recording_overlap": [],
+ "window": 4096,
+ "sampling_rate_hz": 50000,
+ "scaler": "StandardScaler fit on the training split only"
+}

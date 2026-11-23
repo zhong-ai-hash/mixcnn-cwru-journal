@@ -1,0 +1,40 @@
+{
+ "source": "D:\\SEU_gear_db",
+ "files": [
+  "normal_samples.npy",
+  "light_pit_samples.npy",
+  "heavy_pit_samples.npy"
+ ],
+ "source_shapes": {
+  "normal": [
+   312,
+   3600
+  ],
+  "light_pitting": [
+   312,
+   3600
+  ],
+  "heavy_pitting": [
+   312,
+   3600
+  ]
+ },
+ "window": 1024,
+ "stride": 512,
+ "sampling_rate_hz": null,
+ "sampling_rate_note": "not documented in the local copy; the dataset is used only as a cross-component sanity check",
+ "classes": [
+  "normal",
+  "light_pitting",
+  "heavy_pitting"
+ ],
+ "n_windows": 5616,
+ "n_samples": 936,
+ "counts": {
+  "normal": 1872,
+  "light_pitting": 1872,
+  "heavy_pitting": 1872
+ },
+ "windows_per_sample": 6,
+ "split_unit": "original sample (group_id); windows of one sample never split"
+}

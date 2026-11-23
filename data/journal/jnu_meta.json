@@ -1,0 +1,155 @@
+{
+ "source": "JNU bearing dataset",
+ "sampling_rate_hz": 50000,
+ "class_names": [
+  "N",
+  "IB",
+  "OB",
+  "TB"
+ ],
+ "speeds_rpm": [
+  600,
+  800,
+  1000
+ ],
+ "window": 4096,
+ "stride": 4096,
+ "duration_ms": 81.9,
+ "max_per_file": 50,
+ "detrend": false,
+ "n_windows": 600,
+ "class_counts": [
+  150,
+  150,
+  150,
+  150
+ ],
+ "speed_counts": {
+  "600": 200,
+  "800": 200,
+  "1000": 200
+ },
+ "files": [
+  {
+   "file": "ib1000_2.csv",
+   "class": "IB",
+   "speed": 1000,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  },
+  {
+   "file": "ib600_2.csv",
+   "class": "IB",
+   "speed": 600,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  },
+  {
+   "file": "ib800_2.csv",
+   "class": "IB",
+   "speed": 800,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  },
+  {
+   "file": "n1000_3_2.csv",
+   "class": "N",
+   "speed": 1000,
+   "samples": 1501500,
+   "seconds": 30.03,
+   "columns": 1,
+   "windows_available": 366,
+   "windows_used": 50
+  },
+  {
+   "file": "n600_3_2.csv",
+   "class": "N",
+   "speed": 600,
+   "samples": 1501500,
+   "seconds": 30.03,
+   "columns": 1,
+   "windows_available": 366,
+   "windows_used": 50
+  },
+  {
+   "file": "n800_3_2.csv",
+   "class": "N",
+   "speed": 800,
+   "samples": 1501500,
+   "seconds": 30.03,
+   "columns": 1,
+   "windows_available": 366,
+   "windows_used": 50
+  },
+  {
+   "file": "ob1000_2.csv",
+   "class": "OB",
+   "speed": 1000,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  },
+  {
+   "file": "ob600_2.csv",
+   "class": "OB",
+   "speed": 600,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  },
+  {
+   "file": "ob800_2.csv",
+   "class": "OB",
+   "speed": 800,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  },
+  {
+   "file": "tb1000_2.csv",
+   "class": "TB",
+   "speed": 1000,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  },
+  {
+   "file": "tb600_2.csv",
+   "class": "TB",
+   "speed": 600,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  },
+  {
+   "file": "tb800_2.csv",
+   "class": "TB",
+   "speed": 800,
+   "samples": 500500,
+   "seconds": 10.01,
+   "columns": 1,
+   "windows_available": 122,
+   "windows_used": 50
+  }
+ ],
+ "note": "4096 samples at 50 kHz gives 82 ms, matching the 85 ms CWRU window; native bandwidth is preserved."
+}

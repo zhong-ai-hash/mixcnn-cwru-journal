@@ -1,0 +1,617 @@
+{
+ "source": "CWRU 12k drive-end",
+ "class_names": [
+  "N",
+  "IR007",
+  "IR014",
+  "IR021",
+  "B007",
+  "B014",
+  "B021",
+  "OR007",
+  "OR014",
+  "OR021"
+ ],
+ "file_table": {
+  "97": {
+   "class": "N",
+   "nominal_load": 0
+  },
+  "98": {
+   "class": "N",
+   "nominal_load": 1
+  },
+  "99": {
+   "class": "N",
+   "nominal_load": 2
+  },
+  "100": {
+   "class": "N",
+   "nominal_load": 3
+  },
+  "105": {
+   "class": "IR007",
+   "nominal_load": 0
+  },
+  "106": {
+   "class": "IR007",
+   "nominal_load": 1
+  },
+  "107": {
+   "class": "IR007",
+   "nominal_load": 2
+  },
+  "108": {
+   "class": "IR007",
+   "nominal_load": 3
+  },
+  "169": {
+   "class": "IR014",
+   "nominal_load": 0
+  },
+  "170": {
+   "class": "IR014",
+   "nominal_load": 1
+  },
+  "171": {
+   "class": "IR014",
+   "nominal_load": 2
+  },
+  "172": {
+   "class": "IR014",
+   "nominal_load": 3
+  },
+  "209": {
+   "class": "IR021",
+   "nominal_load": 0
+  },
+  "210": {
+   "class": "IR021",
+   "nominal_load": 1
+  },
+  "211": {
+   "class": "IR021",
+   "nominal_load": 2
+  },
+  "212": {
+   "class": "IR021",
+   "nominal_load": 3
+  },
+  "118": {
+   "class": "B007",
+   "nominal_load": 0
+  },
+  "119": {
+   "class": "B007",
+   "nominal_load": 1
+  },
+  "120": {
+   "class": "B007",
+   "nominal_load": 2
+  },
+  "121": {
+   "class": "B007",
+   "nominal_load": 3
+  },
+  "185": {
+   "class": "B014",
+   "nominal_load": 0
+  },
+  "186": {
+   "class": "B014",
+   "nominal_load": 1
+  },
+  "187": {
+   "class": "B014",
+   "nominal_load": 2
+  },
+  "188": {
+   "class": "B014",
+   "nominal_load": 3
+  },
+  "222": {
+   "class": "B021",
+   "nominal_load": 0
+  },
+  "223": {
+   "class": "B021",
+   "nominal_load": 1
+  },
+  "224": {
+   "class": "B021",
+   "nominal_load": 2
+  },
+  "225": {
+   "class": "B021",
+   "nominal_load": 3
+  },
+  "130": {
+   "class": "OR007",
+   "nominal_load": 0
+  },
+  "131": {
+   "class": "OR007",
+   "nominal_load": 1
+  },
+  "132": {
+   "class": "OR007",
+   "nominal_load": 2
+  },
+  "133": {
+   "class": "OR007",
+   "nominal_load": 3
+  },
+  "197": {
+   "class": "OR014",
+   "nominal_load": 0
+  },
+  "198": {
+   "class": "OR014",
+   "nominal_load": 1
+  },
+  "199": {
+   "class": "OR014",
+   "nominal_load": 2
+  },
+  "200": {
+   "class": "OR014",
+   "nominal_load": 3
+  },
+  "234": {
+   "class": "OR021",
+   "nominal_load": 0
+  },
+  "235": {
+   "class": "OR021",
+   "nominal_load": 1
+  },
+  "236": {
+   "class": "OR021",
+   "nominal_load": 2
+  },
+  "237": {
+   "class": "OR021",
+   "nominal_load": 3
+  }
+ },
+ "fault_size_inch": {
+  "N": 0.0,
+  "IR007": 0.007,
+  "IR014": 0.014,
+  "IR021": 0.021,
+  "B007": 0.007,
+  "B014": 0.014,
+  "B021": 0.021,
+  "OR007": 0.007,
+  "OR014": 0.014,
+  "OR021": 0.021
+ },
+ "window": 1024,
+ "stride": 1024,
+ "detrend": false,
+ "n_windows": 2000,
+ "class_counts": [
+  200,
+  200,
+  200,
+  200,
+  200,
+  200,
+  200,
+  200,
+  200,
+  200
+ ],
+ "load_counts": [
+  500,
+  500,
+  500,
+  500
+ ],
+ "per_file": [
+  {
+   "file": 118,
+   "class": "B007",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1796.0,
+   "n_windows": 50,
+   "signal_key": "X118_DE_time",
+   "signal_len": 122571
+  },
+  {
+   "file": 119,
+   "class": "B007",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1772.0,
+   "n_windows": 50,
+   "signal_key": "X119_DE_time",
+   "signal_len": 121410
+  },
+  {
+   "file": 120,
+   "class": "B007",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1748.0,
+   "n_windows": 50,
+   "signal_key": "X120_DE_time",
+   "signal_len": 121556
+  },
+  {
+   "file": 121,
+   "class": "B007",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1722.0,
+   "n_windows": 50,
+   "signal_key": "X121_DE_time",
+   "signal_len": 121556
+  },
+  {
+   "file": 185,
+   "class": "B014",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1796.0,
+   "n_windows": 50,
+   "signal_key": "X185_DE_time",
+   "signal_len": 121846
+  },
+  {
+   "file": 186,
+   "class": "B014",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1772.0,
+   "n_windows": 50,
+   "signal_key": "X186_DE_time",
+   "signal_len": 122136
+  },
+  {
+   "file": 187,
+   "class": "B014",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1749.0,
+   "n_windows": 50,
+   "signal_key": "X187_DE_time",
+   "signal_len": 121991
+  },
+  {
+   "file": 188,
+   "class": "B014",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1724.0,
+   "n_windows": 50,
+   "signal_key": "X188_DE_time",
+   "signal_len": 122136
+  },
+  {
+   "file": 222,
+   "class": "B021",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1796.0,
+   "n_windows": 50,
+   "signal_key": "X222_DE_time",
+   "signal_len": 121991
+  },
+  {
+   "file": 223,
+   "class": "B021",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1774.0,
+   "n_windows": 50,
+   "signal_key": "X223_DE_time",
+   "signal_len": 121701
+  },
+  {
+   "file": 224,
+   "class": "B021",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1754.0,
+   "n_windows": 50,
+   "signal_key": "X224_DE_time",
+   "signal_len": 122136
+  },
+  {
+   "file": 225,
+   "class": "B021",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1729.0,
+   "n_windows": 50,
+   "signal_key": "X225_DE_time",
+   "signal_len": 122136
+  },
+  {
+   "file": 105,
+   "class": "IR007",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1797.0,
+   "n_windows": 50,
+   "signal_key": "X105_DE_time",
+   "signal_len": 121265
+  },
+  {
+   "file": 106,
+   "class": "IR007",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1772.0,
+   "n_windows": 50,
+   "signal_key": "X106_DE_time",
+   "signal_len": 121991
+  },
+  {
+   "file": 107,
+   "class": "IR007",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1748.0,
+   "n_windows": 50,
+   "signal_key": "X107_DE_time",
+   "signal_len": 122136
+  },
+  {
+   "file": 108,
+   "class": "IR007",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1721.0,
+   "n_windows": 50,
+   "signal_key": "X108_DE_time",
+   "signal_len": 122917
+  },
+  {
+   "file": 169,
+   "class": "IR014",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1796.0,
+   "n_windows": 50,
+   "signal_key": "X169_DE_time",
+   "signal_len": 121846
+  },
+  {
+   "file": 170,
+   "class": "IR014",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1774.0,
+   "n_windows": 50,
+   "signal_key": "X170_DE_time",
+   "signal_len": 121846
+  },
+  {
+   "file": 171,
+   "class": "IR014",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1752.0,
+   "n_windows": 50,
+   "signal_key": "X171_DE_time",
+   "signal_len": 121846
+  },
+  {
+   "file": 172,
+   "class": "IR014",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1728.0,
+   "n_windows": 50,
+   "signal_key": "X172_DE_time",
+   "signal_len": 121701
+  },
+  {
+   "file": 209,
+   "class": "IR021",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1797.0,
+   "n_windows": 50,
+   "signal_key": "X209_DE_time",
+   "signal_len": 122136
+  },
+  {
+   "file": 210,
+   "class": "IR021",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1774.0,
+   "n_windows": 50,
+   "signal_key": "X210_DE_time",
+   "signal_len": 121556
+  },
+  {
+   "file": 211,
+   "class": "IR021",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1752.0,
+   "n_windows": 50,
+   "signal_key": "X211_DE_time",
+   "signal_len": 121846
+  },
+  {
+   "file": 212,
+   "class": "IR021",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1728.0,
+   "n_windows": 50,
+   "signal_key": "X212_DE_time",
+   "signal_len": 121991
+  },
+  {
+   "file": 130,
+   "class": "OR007",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1796.0,
+   "n_windows": 50,
+   "signal_key": "X130_DE_time",
+   "signal_len": 121991
+  },
+  {
+   "file": 131,
+   "class": "OR007",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1773.0,
+   "n_windows": 50,
+   "signal_key": "X131_DE_time",
+   "signal_len": 122426
+  },
+  {
+   "file": 132,
+   "class": "OR007",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1750.0,
+   "n_windows": 50,
+   "signal_key": "X132_DE_time",
+   "signal_len": 121410
+  },
+  {
+   "file": 133,
+   "class": "OR007",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1725.0,
+   "n_windows": 50,
+   "signal_key": "X133_DE_time",
+   "signal_len": 122571
+  },
+  {
+   "file": 197,
+   "class": "OR014",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1796.0,
+   "n_windows": 50,
+   "signal_key": "X197_DE_time",
+   "signal_len": 121846
+  },
+  {
+   "file": 198,
+   "class": "OR014",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1772.0,
+   "n_windows": 50,
+   "signal_key": "X198_DE_time",
+   "signal_len": 122136
+  },
+  {
+   "file": 199,
+   "class": "OR014",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1749.0,
+   "n_windows": 50,
+   "signal_key": "X199_DE_time",
+   "signal_len": 121846
+  },
+  {
+   "file": 200,
+   "class": "OR014",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1723.0,
+   "n_windows": 50,
+   "signal_key": "X200_DE_time",
+   "signal_len": 121991
+  },
+  {
+   "file": 234,
+   "class": "OR021",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1796.0,
+   "n_windows": 50,
+   "signal_key": "X234_DE_time",
+   "signal_len": 122426
+  },
+  {
+   "file": 235,
+   "class": "OR021",
+   "load": 1,
+   "load_source": "rpm",
+   "rpm": 1771.0,
+   "n_windows": 50,
+   "signal_key": "X235_DE_time",
+   "signal_len": 121991
+  },
+  {
+   "file": 236,
+   "class": "OR021",
+   "load": 2,
+   "load_source": "rpm",
+   "rpm": 1748.0,
+   "n_windows": 50,
+   "signal_key": "X236_DE_time",
+   "signal_len": 122281
+  },
+  {
+   "file": 237,
+   "class": "OR021",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1721.0,
+   "n_windows": 50,
+   "signal_key": "X237_DE_time",
+   "signal_len": 121991
+  },
+  {
+   "file": 97,
+   "class": "N",
+   "load": 0,
+   "load_source": "rpm",
+   "rpm": 1796.0,
+   "n_windows": 50,
+   "signal_key": "X097_DE_time",
+   "signal_len": 243938
+  },
+  {
+   "file": 98,
+   "class": "N",
+   "load": 1,
+   "load_source": "file_table",
+   "rpm": null,
+   "n_windows": 50,
+   "signal_key": "X098_DE_time",
+   "signal_len": 483903
+  },
+  {
+   "file": 99,
+   "class": "N",
+   "load": 2,
+   "load_source": "file_table",
+   "rpm": null,
+   "n_windows": 50,
+   "signal_key": "X099_DE_time",
+   "signal_len": 485063
+  },
+  {
+   "file": 100,
+   "class": "N",
+   "load": 3,
+   "load_source": "rpm",
+   "rpm": 1725.0,
+   "n_windows": 50,
+   "signal_key": "X100_DE_time",
+   "signal_len": 485643
+  }
+ ],
+ "missing_files": [],
+ "unknown_files": [],
+ "load_inference": "RPM nearest to 1797/1772/1750/1730; file_table fallback when RPM is absent",
+ "note": "rec_id equals file_id; each file is one recording."
+}
