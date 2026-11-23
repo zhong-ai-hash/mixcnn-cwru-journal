@@ -41,8 +41,24 @@ results/gpu/<suite>/summary.json     # 跨种子/跨切分汇总
 results/gpu/<suite>/summary.csv      # 同上，扁平表
 results/gpu/<suite>/runs.csv         # 每个 run 一行
 results/gpu/<suite>/manifest.json    # 环境、seeds/splits、耗时
+results/gpu/<suite>/runtime.json     # 跨断点续跑的累计墙钟（sessions 列表）
 results/gpu/benchmark.json|csv       # 单 job 实测与外推 ETA
 ```
+
+## 运行开销
+
+每个 run 的 JSON 都记录，可直接进论文的 cost 表：
+
+- `train_secs` / `eval_secs` / `secs`：训练、评估、合计秒数
+- `epoch_secs` / `epoch_secs_mean`：逐 epoch 秒数与均值
+- `train_windows_per_s` / `eval_windows_per_s`：训练与推理吞吐（窗/秒）
+- `peak_alloc_mb` / `peak_reserved_mb`：本 run 的 CUDA 峰值显存
+- `micro_batch` / `grad_accum`：4096 点输入下的实际 micro-batch 与累积步数
+
+`summary.json` 的 `overhead` 段给出整个 suite 的合计 GPU 秒、均值与峰值；
+`runtime.json` 把每次启动（含中断后的续跑）的墙钟累加，
+`manifest.total_secs_all_sessions` 是真实总开销，不是最后一次进程的耗时。
+`runs.csv` 含上述全部字段，可直接做图或做表。
 
 ## 统计
 

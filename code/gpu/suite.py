@@ -120,6 +120,14 @@ def aggregate(out_dir: Path):
     metrics = sorted({k for r in rows for k in r.get('pre', {})
                       if k.startswith('acc_') or k.startswith('f1_')})
     summary = {'runs': len(rows), 'groups': {}, 'contrasts': []}
+    train_secs = [r.get('train_secs') or 0.0 for r in rows]
+    eval_secs = [r.get('eval_secs') or 0.0 for r in rows]
+    peaks = [r.get('peak_alloc_mb') for r in rows
+             if r.get('peak_alloc_mb') is not None]
+    tput = [r.get('train_windows_per_s') for r in rows
+            if r.get('train_windows_per_s') is not None]
+    epoch_means = [r['epoch_secs_mean'] for r in rows
+                   if r.get('epoch_secs_mean')]
     flat = []
     for key, splits in sorted(groups.items()):
         entry = {'n_splits': len(splits), 'metrics': {}}
@@ -166,7 +174,6 @@ def aggregate(out_dir: Path):
                         'reference': va, 'comparison': vb,
                         'delta': round(vb - va, 2),
                     })
-    (out_dir / 'summary.json').write_text(json.dumps(summary, indent=1))
     try:
         import pandas as pd
         pd.DataFrame(flat).to_csv(out_dir / 'summary.csv', index=False)
@@ -176,12 +183,75 @@ def aggregate(out_dir: Path):
             'seed': r['seed'], 'acc_clean': r['pre'].get('acc_clean'),
             'acc_snr_0': r['pre'].get('acc_snr_0'),
             'train_secs': r.get('train_secs'), 'eval_secs': r.get('eval_secs'),
+            'secs': r.get('secs'),
+            'epoch_secs_mean': r.get('epoch_secs_mean'),
+            'train_windows_per_s': r.get('train_windows_per_s'),
+            'eval_windows_per_s': r.get('eval_windows_per_s'),
+            'peak_alloc_mb': r.get('peak_alloc_mb'),
+            'peak_reserved_mb': r.get('peak_reserved_mb'),
+            'n_train': r.get('n_train'), 'n_test': r.get('n_test'),
+            'micro_batch': r.get('micro_batch'),
+            'grad_accum': r.get('grad_accum'),
             'params': r.get('params'),
         } for r in rows]
         pd.DataFrame(run_rows).to_csv(out_dir / 'runs.csv', index=False)
     except Exception as exc:  # pandas is optional during smoke tests
         print(f'csv export skipped: {exc}')
+    summary['overhead'] = {
+        'n_runs': len(rows),
+        'gpu_secs_total': round(sum(train_secs) + sum(eval_secs), 1),
+        'train_secs_total': round(sum(train_secs), 1),
+        'eval_secs_total': round(sum(eval_secs), 1),
+        'train_secs_mean': round(float(np.mean(train_secs)), 2) if rows else 0,
+        'eval_secs_mean': round(float(np.mean(eval_secs)), 2) if rows else 0,
+        'epoch_secs_mean': (
+            round(float(np.mean(epoch_means)), 3) if epoch_means else None),
+        'train_windows_per_s_mean': (
+            round(float(np.mean(tput)), 1) if tput else None),
+        'peak_alloc_mb_max': (round(float(np.max(peaks)), 1)
+                              if peaks else None),
+    }
+    (out_dir / 'summary.json').write_text(json.dumps(summary, indent=1))
     return summary
+
+
+def update_runtime(out: Path, record: dict) -> dict:
+    """Accumulate wall clock across resumed sessions.
+
+    ``manifest.elapsed_secs`` only covers the current process.  The ledger
+    keeps every session so a matrix interrupted and restarted three times
+    still reports one honest total for the paper's cost table.
+    """
+    path = out / 'runtime.json'
+    ledger = {'sessions': []}
+    if path.exists():
+        try:
+            ledger = json.loads(path.read_text())
+        except Exception:
+            ledger = {'sessions': []}
+    ledger['sessions'].append(record)
+    ledger['total_secs'] = round(
+        sum(s.get('elapsed_secs', 0.0) for s in ledger['sessions']), 1)
+    ledger['total_jobs_done'] = int(
+        sum(s.get('runs_new', 0) for s in ledger['sessions']))
+    ledger['sessions_count'] = len(ledger['sessions'])
+    ledger['updated'] = datetime.now(timezone.utc).isoformat()
+    json_dump(path, ledger)
+    return ledger
+
+
+def _count_complete(out: Path) -> int:
+    n = 0
+    for path in out.glob('*.json'):
+        if path.name in ('summary.json', 'manifest.json', 'runtime.json',
+                         'progress.json'):
+            continue
+        try:
+            if json.loads(path.read_text()).get('complete'):
+                n += 1
+        except Exception:
+            continue
+    return n
 
 
 def main():
@@ -242,6 +312,7 @@ def main():
     out = Path(args.out_dir) if args.out_dir else RESULTS / args.suite
     out.mkdir(parents=True, exist_ok=True)
     done, t0 = 0, time.time()
+    runs_before = _count_complete(out)
     fail_path = out / 'failures.jsonl'
 
     def record_failure(job, exc):
@@ -277,11 +348,28 @@ def main():
                 print(f'[{done}/{len(jobs)}] {msg} '
                       f'({time.time() - t0:.0f}s)', flush=True)
     summary = aggregate(out)
+    session = {
+        'suite': args.suite,
+        'started': datetime.fromtimestamp(t0, timezone.utc).isoformat(),
+        'finished': datetime.now(timezone.utc).isoformat(),
+        'elapsed_secs': round(time.time() - t0, 1),
+        'jobs_requested': len(jobs),
+        'runs_new': max(0, summary['runs'] - runs_before),
+        'runs_total': summary['runs'],
+        'jobs_workers': args.jobs,
+        'epochs': args.epochs, 'batch': args.batch, 'draws': args.draws,
+        'gpu': (__import__('torch').cuda.get_device_name(0)
+                if __import__('torch').cuda.is_available() else None),
+    }
+    ledger = update_runtime(out, session)
     manifest = {
         'suite': args.suite,
         'started': datetime.fromtimestamp(t0, timezone.utc).isoformat(),
         'finished': datetime.now(timezone.utc).isoformat(),
         'elapsed_secs': round(time.time() - t0, 1),
+        'total_secs_all_sessions': ledger['total_secs'],
+        'sessions': ledger['sessions_count'],
+        'runs_new_this_session': session['runs_new'],
         'jobs_requested': len(jobs), 'runs_completed': summary['runs'],
         'jobs_workers': args.jobs, 'device': args.device,
         'epochs': args.epochs, 'batch': args.batch, 'lr': args.lr,

@@ -40,6 +40,22 @@ def _grad_scaler(enabled):
         return torch.cuda.amp.GradScaler(enabled=enabled)
 
 
+def _reset_peak_memory(device):
+    if device.type == 'cuda':
+        torch.cuda.reset_peak_memory_stats(device)
+
+
+def _peak_memory(device):
+    if device.type != 'cuda':
+        return {}
+    return {
+        'peak_alloc_mb': round(
+            torch.cuda.max_memory_allocated(device) / 2 ** 20, 1),
+        'peak_reserved_mb': round(
+            torch.cuda.max_memory_reserved(device) / 2 ** 20, 1),
+    }
+
+
 def add_noise(x: torch.Tensor, snr_db, generator=None) -> torch.Tensor:
     if not torch.is_tensor(snr_db):
         snr_db = torch.tensor(snr_db, dtype=x.dtype, device=x.device)
@@ -75,7 +91,9 @@ def train_model(model, xtr, ytr, cfg, device):
     micro = auto_batch(cfg['batch'], xtr.shape[-1])
     accum = max(1, cfg['batch'] // micro)
     t0 = time.time()
+    epoch_secs = []
     for _ in range(cfg['epochs']):
+        t_epoch = time.time()
         model.train()
         perm = torch.randperm(n, device=device)
         for i in range(0, n, micro):
@@ -98,7 +116,19 @@ def train_model(model, xtr, ytr, cfg, device):
                 scaler.step(opt)
                 scaler.update()
                 opt.zero_grad(set_to_none=True)
-    return round(time.time() - t0, 1)
+        epoch_secs.append(round(time.time() - t_epoch, 2))
+    total = round(time.time() - t0, 1)
+    return {
+        'secs': total,
+        'epoch_secs': epoch_secs,
+        'epoch_secs_mean': (round(float(np.mean(epoch_secs)), 2)
+                            if epoch_secs else 0.0),
+        'train_windows_per_s': round(
+            n * len(epoch_secs) / max(total, 1e-9), 1),
+        'n_train': int(n),
+        'micro_batch': int(micro),
+        'grad_accum': int(accum),
+    }
 
 
 def reset_bn(model):
@@ -177,16 +207,26 @@ def run_job(job: dict, cfg: dict, device) -> dict:
     n_classes = int(split['meta'].get('n_classes', 10))
 
     model = build(job['model'], n_classes).to(device)
-    secs = train_model(model, xtr, ytr, cfg, device)
+    _reset_peak_memory(device)
+    train_stats = train_model(model, xtr, ytr, cfg, device)
+    secs = train_stats['secs']
 
     t_eval = time.time()
     metrics, corr = evaluate(model, xte, yte, cfg['snrs'], cfg['draws'],
                              seed_base=cfg['eval_seed'])
+    eval_secs = round(time.time() - t_eval, 1)
+    eval_windows = (len(xte) * (1 + len(cfg['snrs']) * cfg['draws'])
+                    * (1 + len(cfg['bn_snrs'])))
     payload = {
         **job,
         'n_train': int(len(xtr)), 'n_test': int(len(xte)),
         'n_classes': n_classes,
         'params': n_params(model), 'train_secs': secs,
+        'epoch_secs': train_stats['epoch_secs'],
+        'epoch_secs_mean': train_stats['epoch_secs_mean'],
+        'train_windows_per_s': train_stats['train_windows_per_s'],
+        'micro_batch': train_stats['micro_batch'],
+        'grad_accum': train_stats['grad_accum'],
         'snrs': list(cfg['snrs']), 'draws': int(cfg['draws']),
         'eval_seed': int(cfg['eval_seed']),
         'bn_banks': ['clean' if v is None else f'{v:g}'
@@ -218,5 +258,9 @@ def run_job(job: dict, cfg: dict, device) -> dict:
             arrays[f'bn_{bank}_{key}'] = value
 
     payload['eval_secs'] = round(time.time() - t_eval, 1)
+    payload['eval_windows'] = int(eval_windows)
+    payload['eval_windows_per_s'] = round(
+        eval_windows / max(payload['eval_secs'], 1e-9), 1)
     payload['secs'] = round(payload['train_secs'] + payload['eval_secs'], 1)
+    payload.update(_peak_memory(device))
     return payload, arrays
