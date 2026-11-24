@@ -79,6 +79,17 @@ def job_id(job: dict) -> str:
             f"{job['cond']}_seed{job['seed']}")
 
 
+def cfg_stamp(cfg: dict) -> dict:
+    """Identify the evaluation protocol so stale runs are never reused."""
+    return {
+        'epochs': int(cfg['epochs']), 'batch': int(cfg['batch']),
+        'lr': float(cfg['lr']), 'draws': int(cfg['draws']),
+        'snrs': [float(v) for v in cfg['snrs']],
+        'bn_banks': ['clean' if v is None else f'{v:g}'
+                     for v in cfg['bn_snrs']],
+    }
+
+
 def _worker(job: dict, cfg: dict, out_dir: str) -> str:
     import torch
     torch.set_num_threads(cfg.get('cpu_threads', 1))
@@ -88,7 +99,11 @@ def _worker(job: dict, cfg: dict, out_dir: str) -> str:
     out_path = Path(out_dir) / f'{stem}.json'
     pred_path = Path(out_dir) / 'preds' / f'{stem}.npz'
     if out_path.exists() and not cfg.get('force'):
-        if json.loads(out_path.read_text()).get('complete'):
+        try:
+            prev = json.loads(out_path.read_text())
+        except Exception:
+            prev = {}
+        if prev.get('complete') and prev.get('cfg_stamp') == cfg_stamp(cfg):
             return f'{stem} skip'
     payload, arrays = run_job(job, cfg, device)
     pred_path.parent.mkdir(parents=True, exist_ok=True)

@@ -156,6 +156,7 @@ def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256):
     y_np = y.detach().cpu().numpy()
     pred = predict(model, x, batch).detach().cpu().numpy()
     labels = np.arange(int(y_np.max()) + 1)
+    counts = np.maximum(np.bincount(y_np, minlength=len(labels)), 1)
     metrics = {
         'acc_clean': round(float(accuracy_score(y_np, pred)) * 100, 2),
         'f1_clean': round(float(f1_score(
@@ -163,28 +164,31 @@ def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256):
         'recall_clean': [round(float(v) * 100, 2) for v in
                          np.diag(confusion_matrix(
                              y_np, pred, labels=labels))
-                         / np.maximum(np.bincount(
-                             y_np, minlength=len(labels)), 1)],
+                         / counts],
         'confusion_clean': confusion_matrix(
             y_np, pred, labels=labels).tolist(),
     }
     correctness = {'clean': (pred == y_np).astype(np.int8)}
+    # Draws are batched together: one forward over g x N windows is far more
+    # GPU-efficient than g small forwards, and the noise is still iid per
+    # window because each group starts from its own generator seed.
+    group = max(1, min(draws, 8192 // max(len(x), 1)))
     for snr in snrs:
         accs, f1s, recalls, rows = [], [], [], []
-        for d in range(draws):
+        for d0 in range(0, draws, group):
+            g = min(group, draws - d0)
             gen = torch.Generator(device=x.device).manual_seed(
-                seed_base + int(round((snr + 20) * 100)) + d)
-            preds = []
-            for i in range(0, len(x), batch):
-                xb = add_noise(x[i:i + batch], float(snr), generator=gen)
-                preds.append(model(xb).argmax(1))
-            p = torch.cat(preds).detach().cpu().numpy()
-            accs.append(accuracy_score(y_np, p))
-            f1s.append(f1_score(y_np, p, average='macro', zero_division=0))
-            recalls.append(np.diag(confusion_matrix(
-                y_np, p, labels=labels))
-                / np.maximum(np.bincount(y_np, minlength=len(labels)), 1))
-            rows.append((p == y_np).astype(np.int8))
+                seed_base + int(round((snr + 20) * 100)) + d0)
+            xs = add_noise(x.repeat(g, 1, 1), float(snr), generator=gen)
+            p = predict(model, xs, batch).view(g, len(x)).cpu().numpy()
+            for i in range(g):
+                pi = p[i]
+                accs.append(accuracy_score(y_np, pi))
+                f1s.append(f1_score(y_np, pi, average='macro',
+                                    zero_division=0))
+                recalls.append(np.diag(confusion_matrix(
+                    y_np, pi, labels=labels)) / counts)
+                rows.append((pi == y_np).astype(np.int8))
         key = f'{snr:g}'
         metrics[f'acc_snr_{key}'] = round(float(np.mean(accs)) * 100, 2)
         metrics[f'std_snr_{key}'] = round(float(np.std(accs)) * 100, 2)
@@ -202,8 +206,12 @@ def run_job(job: dict, cfg: dict, device) -> dict:
 
     seed_all(job['seed'], cfg.get('deterministic', False))
     split = split_for(job['dataset'], job['split'])
-    xtr, ytr = split['xtr'], split['ytr']
-    xte, yte = split['xte'], split['yte']
+    # Splits are built on CPU; keep every tensor on the compute device so the
+    # permutation, noise draw and BN recalibration share one device.
+    xtr = split['xtr'].to(device)
+    ytr = split['ytr'].to(device)
+    xte = split['xte'].to(device)
+    yte = split['yte'].to(device)
     n_classes = int(split['meta'].get('n_classes', 10))
 
     model = build(job['model'], n_classes).to(device)
@@ -219,6 +227,13 @@ def run_job(job: dict, cfg: dict, device) -> dict:
                     * (1 + len(cfg['bn_snrs'])))
     payload = {
         **job,
+        'cfg_stamp': {
+            'epochs': int(cfg['epochs']), 'batch': int(cfg['batch']),
+            'lr': float(cfg['lr']), 'draws': int(cfg['draws']),
+            'snrs': [float(v) for v in cfg['snrs']],
+            'bn_banks': ['clean' if v is None else f'{v:g}'
+                         for v in cfg['bn_snrs']],
+        },
         'n_train': int(len(xtr)), 'n_test': int(len(xte)),
         'n_classes': n_classes,
         'params': n_params(model), 'train_secs': secs,
