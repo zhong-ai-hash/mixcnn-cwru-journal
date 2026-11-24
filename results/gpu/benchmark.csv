@@ -1,0 +1,15 @@
+model,dataset,split,cond,params,train_secs,eval_secs,total_secs,acc_clean,acc_snr_0
+base,cwru,lobo0,noise,81674,5.0,24.8,30.8,90.2,88.43
+noPad,cwru,lobo0,noise,81674,3.1,7.1,10.2,97.6,93.11
+nores,cwru,lobo0,noise,81674,2.8,22.2,25.1,88.8,87.09
+soft,cwru,lobo0,noise,82058,4.7,32.5,37.3,89.0,88.33
+multi,cwru,lobo0,noise,84746,3.3,7.4,10.7,93.6,90.75
+soft_multi,cwru,lobo0,noise,85130,3.5,7.7,11.2,92.8,91.02
+wdcnn,cwru,lobo0,noise,35290,2.6,5.1,7.7,65.6,65.86
+resnet1d,cwru,lobo0,noise,100554,2.9,5.5,8.4,85.0,91.43
+drsn1d,cwru,lobo0,noise,105450,4.9,19.3,24.2,84.4,71.29
+tcn,cwru,lobo0,noise,101066,3.5,7.3,10.8,61.8,82.86
+transformer,cwru,lobo0,noise,168522,5.3,6.5,11.9,66.8,69.84
+base,jnu,1000,noise,80900,3.7,6.3,10.1,43.5,25.75
+base,paderborn,pgroup0,noise,80771,69.7,659.4,731.9,64.52,63.55
+base,seu,sgroup0,noise,80771,9.2,8.7,18.1,99.82,96.19

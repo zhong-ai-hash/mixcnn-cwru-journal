@@ -1,0 +1,22 @@
+{
+ "sessions": [
+  {
+   "suite": "paderborn",
+   "started": "2026-11-24T10:00:54.630573+00:00",
+   "finished": "2026-11-24T15:10:18.449482+00:00",
+   "elapsed_secs": 18563.8,
+   "jobs_requested": 180,
+   "runs_new": 180,
+   "runs_total": 180,
+   "jobs_workers": 6,
+   "epochs": 20,
+   "batch": 128,
+   "draws": 10,
+   "gpu": "NVIDIA vGPU-48GB"
+  }
+ ],
+ "total_secs": 18563.8,
+ "total_jobs_done": 180,
+ "sessions_count": 1,
+ "updated": "2026-11-24T15:10:18.587782+00:00"
+}

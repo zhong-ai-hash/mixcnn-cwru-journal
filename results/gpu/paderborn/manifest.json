@@ -1,0 +1,50 @@
+{
+ "suite": "paderborn",
+ "started": "2026-11-24T10:00:54.630573+00:00",
+ "finished": "2026-11-24T15:10:18.588353+00:00",
+ "elapsed_secs": 18564.0,
+ "total_secs_all_sessions": 18563.8,
+ "sessions": 1,
+ "runs_new_this_session": 180,
+ "jobs_requested": 180,
+ "runs_completed": 180,
+ "jobs_workers": 6,
+ "device": "cuda",
+ "epochs": 20,
+ "batch": 128,
+ "lr": 0.0001,
+ "draws": 10,
+ "snrs": [
+  -8,
+  -4,
+  0,
+  4,
+  8,
+  12,
+  16
+ ],
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "splits": [
+  "pfile0",
+  "pfile1",
+  "pfile2",
+  "pfile3",
+  "pfile4",
+  "pgroup0",
+  "pgroup1",
+  "pgroup2",
+  "pgroup3",
+  "pgroup4"
+ ],
+ "bn_banks": 3,
+ "torch": "2.3.0+cu121",
+ "cuda": "12.1",
+ "cudnn": 8902,
+ "numpy": "2.5.5",
+ "host": "autodl-container-cbe249b746-fa679e25",
+ "gpu": "NVIDIA vGPU-48GB"
+}

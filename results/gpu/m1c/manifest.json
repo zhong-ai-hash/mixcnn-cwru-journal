@@ -1,0 +1,53 @@
+{
+ "suite": "m1c",
+ "started": "2026-11-24T09:17:32.350131+00:00",
+ "finished": "2026-11-24T09:35:52.972364+00:00",
+ "elapsed_secs": 1100.6,
+ "total_secs_all_sessions": 1100.5,
+ "sessions": 1,
+ "runs_new_this_session": 480,
+ "jobs_requested": 480,
+ "runs_completed": 480,
+ "jobs_workers": 12,
+ "device": "cuda",
+ "epochs": 20,
+ "batch": 128,
+ "lr": 0.0001,
+ "draws": 10,
+ "snrs": [
+  0.0
+ ],
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19
+ ],
+ "splits": [
+  "m1c_leak",
+  "m1c_noov"
+ ],
+ "bn_banks": 0,
+ "torch": "2.3.0+cu121",
+ "cuda": "12.1",
+ "cudnn": 8902,
+ "numpy": "2.5.5",
+ "host": "autodl-container-cbe249b746-fa679e25",
+ "gpu": "NVIDIA vGPU-48GB"
+}

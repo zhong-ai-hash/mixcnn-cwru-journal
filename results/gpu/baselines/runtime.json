@@ -1,0 +1,22 @@
+{
+ "sessions": [
+  {
+   "suite": "baselines",
+   "started": "2026-11-24T07:48:33.181677+00:00",
+   "finished": "2026-11-24T09:17:29.122404+00:00",
+   "elapsed_secs": 5335.9,
+   "jobs_requested": 2400,
+   "runs_new": 2400,
+   "runs_total": 2400,
+   "jobs_workers": 12,
+   "epochs": 20,
+   "batch": 128,
+   "draws": 10,
+   "gpu": "NVIDIA vGPU-48GB"
+  }
+ ],
+ "total_secs": 5335.9,
+ "total_jobs_done": 2400,
+ "sessions_count": 1,
+ "updated": "2026-11-24T09:17:29.240308+00:00"
+}

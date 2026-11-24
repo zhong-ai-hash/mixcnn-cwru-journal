@@ -1,0 +1,219 @@
+{
+ "host": "autodl-container-cbe249b746-fa679e25",
+ "python": "3.12.3",
+ "torch": "2.3.0+cu121",
+ "cuda": "12.1",
+ "device": "cuda",
+ "gpu": "NVIDIA vGPU-48GB",
+ "vram_gb": 50.9,
+ "epochs": 20,
+ "draws": 20,
+ "snrs": [
+  -8,
+  -4,
+  0,
+  4,
+  8,
+  12,
+  16
+ ],
+ "bn_banks": 5,
+ "per_model": [
+  {
+   "model": "base",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 81674,
+   "train_secs": 5.0,
+   "eval_secs": 24.8,
+   "total_secs": 30.8,
+   "acc_clean": 90.2,
+   "acc_snr_0": 88.43
+  },
+  {
+   "model": "noPad",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 81674,
+   "train_secs": 3.1,
+   "eval_secs": 7.1,
+   "total_secs": 10.2,
+   "acc_clean": 97.6,
+   "acc_snr_0": 93.11
+  },
+  {
+   "model": "nores",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 81674,
+   "train_secs": 2.8,
+   "eval_secs": 22.2,
+   "total_secs": 25.1,
+   "acc_clean": 88.8,
+   "acc_snr_0": 87.09
+  },
+  {
+   "model": "soft",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 82058,
+   "train_secs": 4.7,
+   "eval_secs": 32.5,
+   "total_secs": 37.3,
+   "acc_clean": 89.0,
+   "acc_snr_0": 88.33
+  },
+  {
+   "model": "multi",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 84746,
+   "train_secs": 3.3,
+   "eval_secs": 7.4,
+   "total_secs": 10.7,
+   "acc_clean": 93.6,
+   "acc_snr_0": 90.75
+  },
+  {
+   "model": "soft_multi",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 85130,
+   "train_secs": 3.5,
+   "eval_secs": 7.7,
+   "total_secs": 11.2,
+   "acc_clean": 92.8,
+   "acc_snr_0": 91.02
+  },
+  {
+   "model": "wdcnn",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 35290,
+   "train_secs": 2.6,
+   "eval_secs": 5.1,
+   "total_secs": 7.7,
+   "acc_clean": 65.6,
+   "acc_snr_0": 65.86
+  },
+  {
+   "model": "resnet1d",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 100554,
+   "train_secs": 2.9,
+   "eval_secs": 5.5,
+   "total_secs": 8.4,
+   "acc_clean": 85.0,
+   "acc_snr_0": 91.43
+  },
+  {
+   "model": "drsn1d",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 105450,
+   "train_secs": 4.9,
+   "eval_secs": 19.3,
+   "total_secs": 24.2,
+   "acc_clean": 84.4,
+   "acc_snr_0": 71.29
+  },
+  {
+   "model": "tcn",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 101066,
+   "train_secs": 3.5,
+   "eval_secs": 7.3,
+   "total_secs": 10.8,
+   "acc_clean": 61.8,
+   "acc_snr_0": 82.86
+  },
+  {
+   "model": "transformer",
+   "dataset": "cwru",
+   "split": "lobo0",
+   "cond": "noise",
+   "params": 168522,
+   "train_secs": 5.3,
+   "eval_secs": 6.5,
+   "total_secs": 11.9,
+   "acc_clean": 66.8,
+   "acc_snr_0": 69.84
+  }
+ ],
+ "jnu_base": {
+  "model": "base",
+  "dataset": "jnu",
+  "split": "1000",
+  "cond": "noise",
+  "params": 80900,
+  "train_secs": 3.7,
+  "eval_secs": 6.3,
+  "total_secs": 10.1,
+  "acc_clean": 43.5,
+  "acc_snr_0": 25.75
+ },
+ "paderborn_models": [
+  {
+   "model": "base",
+   "dataset": "paderborn",
+   "split": "pgroup0",
+   "cond": "noise",
+   "params": 80771,
+   "train_secs": 69.7,
+   "eval_secs": 659.4,
+   "total_secs": 731.9,
+   "acc_clean": 64.52,
+   "acc_snr_0": 63.55
+  }
+ ],
+ "seu_base": {
+  "model": "base",
+  "dataset": "seu",
+  "split": "sgroup0",
+  "cond": "noise",
+  "params": 80771,
+  "train_secs": 9.2,
+  "eval_secs": 8.7,
+  "total_secs": 18.1,
+  "acc_clean": 99.82,
+  "acc_snr_0": 96.19
+ },
+ "runs_per_suite": {
+  "main": 2880,
+  "baselines": 2400,
+  "m1c": 480,
+  "jnu": 360,
+  "paderborn": 1100,
+  "seu": 300
+ },
+ "assumptions": {
+  "paderborn_scale_factor": 23.76,
+  "seu_scale_factor": 0.59,
+  "bn_banks": 5
+ },
+ "eta_gpu_hours": {
+  "main": 16.71,
+  "baselines": 8.4,
+  "m1c": 0.84,
+  "jnu": 0.68,
+  "paderborn": 124.29,
+  "seu": 1.02,
+  "total": 151.94
+ },
+ "eta_wall_days": {
+  "workers_4": 1.58,
+  "workers_8": 0.79
+ }
+}
