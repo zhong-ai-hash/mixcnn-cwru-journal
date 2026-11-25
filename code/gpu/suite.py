@@ -14,7 +14,7 @@ import numpy as np
 
 from common import RESULTS, json_dump
 from engine import run_job
-from models import BASELINES, MIXCNN
+from models import ALL_MODELS, BASELINES, MIXCNN
 
 SPLITS = ([f'lobo{k}' for k in range(4)]
           + [f'group{k}' for k in range(10)]
@@ -87,6 +87,8 @@ def cfg_stamp(cfg: dict) -> dict:
         'snrs': [float(v) for v in cfg['snrs']],
         'bn_banks': ['clean' if v is None else f'{v:g}'
                      for v in cfg['bn_snrs']],
+        'micro_batch': (int(cfg['micro_batch'])
+                        if cfg.get('micro_batch') else None),
     }
 
 
@@ -296,6 +298,12 @@ def main():
     ap.add_argument('--out-dir', default=None)
     ap.add_argument('--force', action='store_true')
     ap.add_argument('--deterministic', action='store_true')
+    ap.add_argument('--save-state', action='store_true',
+                    help='store the trained state_dict before BN recalibration')
+    ap.add_argument('--save-probs', action='store_true',
+                    help='store per-draw softmax (float16) for the pre bank')
+    ap.add_argument('--micro-batch', type=int, default=None,
+                    help='override the length-based micro-batch cap')
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--aggregate-only', action='store_true')
     args = ap.parse_args()
@@ -322,10 +330,13 @@ def main():
         'bn_snrs': [] if args.skip_bn else [None] + args.bn_snrs,
         'device': args.device, 'deterministic': args.deterministic,
         'force': args.force, 'cpu_threads': args.threads,
+        'save_state': args.save_state, 'save_probs': args.save_probs,
+        'micro_batch': args.micro_batch,
     }
     # cond is per job; run_job reads cfg['cond'], so wrap it per job.
     out = Path(args.out_dir) if args.out_dir else RESULTS / args.suite
     out.mkdir(parents=True, exist_ok=True)
+    cfg['state_dir'] = str(out / 'states')
     done, t0 = 0, time.time()
     runs_before = _count_complete(out)
     fail_path = out / 'failures.jsonl'

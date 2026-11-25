@@ -24,6 +24,28 @@ def auto_batch(base: int, length: int) -> int:
     return max(8, int(base * 1024 // length))
 
 
+def noise_seed(seed_base: int, snr: float, draw: int) -> int:
+    """Seed for one noise draw.
+
+    The draw is generated on CPU so the same seed yields the same noise on any
+    device; ``bn_switch.py`` replays these draws exactly.
+    """
+    return int(seed_base) + int(round((snr + 20) * 100)) + int(draw)
+
+
+def add_noise_group(x, snr: float, d0: int, g: int, seed_base: int):
+    """Return ``g`` independent noisy copies of ``x`` stacked on dim 0."""
+    gen = torch.Generator().manual_seed(noise_seed(seed_base, snr, d0))
+    xs = x.repeat(g, 1, 1) if g > 1 else x.clone()
+    noise = torch.randn(xs.shape, generator=gen, dtype=torch.float32)
+    p = xs.pow(2).mean(dim=2, keepdim=True).sqrt()
+    sigma = (p / (10 ** (snr / 20.0))).float()
+    if xs.device.type != 'cpu':
+        noise = noise.to(xs.device)
+        sigma = sigma.to(xs.device)
+    return (xs + noise * sigma).to(x.dtype)
+
+
 def _autocast(device, enabled):
     if not enabled:
         return nullcontext()
@@ -70,12 +92,22 @@ def add_noise(x: torch.Tensor, snr_db, generator=None) -> torch.Tensor:
 
 
 @torch.no_grad()
-def predict(model, x, batch=256):
+def predict(model, x, batch=256, micro_batch=None):
     model.eval()
-    batch = auto_batch(batch, x.shape[-1])
+    batch = int(micro_batch or auto_batch(batch, x.shape[-1]))
     out = []
     for i in range(0, len(x), batch):
         out.append(model(x[i:i + batch]).argmax(1))
+    return torch.cat(out)
+
+
+@torch.no_grad()
+def predict_logits(model, x, batch=256, micro_batch=None):
+    model.eval()
+    batch = int(micro_batch or auto_batch(batch, x.shape[-1]))
+    out = []
+    for i in range(0, len(x), batch):
+        out.append(model(x[i:i + batch]))
     return torch.cat(out)
 
 
@@ -88,7 +120,8 @@ def train_model(model, xtr, ytr, cfg, device):
     scaler = _grad_scaler(use_amp)
     autocast = _autocast(device, use_amp)
     n = len(xtr)
-    micro = auto_batch(cfg['batch'], xtr.shape[-1])
+    micro = int(cfg.get('micro_batch') or auto_batch(
+        cfg['batch'], xtr.shape[-1]))
     accum = max(1, cfg['batch'] // micro)
     t0 = time.time()
     epoch_secs = []
@@ -139,22 +172,37 @@ def reset_bn(model):
 
 
 @torch.no_grad()
-def recalibrate_bn(model, x, batch=256):
-    batch = auto_batch(batch, x.shape[-1])
+def recalibrate_bn(model, x, batch=64, seed=50000, passes=2):
+    """Re-estimate BN statistics from ``x``.
+
+    Windows are shuffled with a fixed seed before batching.  In file order a
+    batch holds only a few recordings, and averaging the per-batch unbiased
+    variances then drops the between-recording variance; with 1500 windows
+    that cost up to 25 accuracy points on a clean model.  Two shuffled passes
+    at batch 64 mix recordings and shrink the sampling error of the variance.
+    """
     reset_bn(model)
     model.train()
-    for i in range(0, len(x), batch):
-        model(x[i:i + batch])
+    gen = torch.Generator().manual_seed(int(seed))
+    for _ in range(int(passes)):
+        perm = torch.randperm(len(x), generator=gen).to(x.device)
+        for i in range(0, len(x), batch):
+            idx = perm[i:i + batch]
+            if len(idx) < 2:
+                continue
+            model(x[idx])
     model.eval()
 
 
 @torch.no_grad()
-def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256):
+def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256,
+             micro_batch=None, want_probs=False):
     from sklearn.metrics import confusion_matrix
 
     model.eval()
     y_np = y.detach().cpu().numpy()
-    pred = predict(model, x, batch).detach().cpu().numpy()
+    logits = predict_logits(model, x, batch, micro_batch)
+    pred = logits.argmax(1).cpu().numpy()
     labels = np.arange(int(y_np.max()) + 1)
     counts = np.maximum(np.bincount(y_np, minlength=len(labels)), 1)
     metrics = {
@@ -169,6 +217,10 @@ def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256):
             y_np, pred, labels=labels).tolist(),
     }
     correctness = {'clean': (pred == y_np).astype(np.int8)}
+    probs_out = {}
+    if want_probs:
+        probs_out['clean'] = torch.softmax(
+            logits.float(), 1).half().cpu().numpy()
     # Draws are batched together: one forward over g x N windows is far more
     # GPU-efficient than g small forwards, and the noise is still iid per
     # window because each group starts from its own generator seed.
@@ -177,10 +229,13 @@ def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256):
         accs, f1s, recalls, rows = [], [], [], []
         for d0 in range(0, draws, group):
             g = min(group, draws - d0)
-            gen = torch.Generator(device=x.device).manual_seed(
-                seed_base + int(round((snr + 20) * 100)) + d0)
-            xs = add_noise(x.repeat(g, 1, 1), float(snr), generator=gen)
-            p = predict(model, xs, batch).view(g, len(x)).cpu().numpy()
+            xs = add_noise_group(x, float(snr), d0, g, seed_base)
+            draw_logits = predict_logits(model, xs, batch, micro_batch)
+            p = draw_logits.argmax(1).view(g, len(x)).cpu().numpy()
+            if want_probs:
+                probs_out[f'snr_{snr:g}'] = torch.softmax(
+                    draw_logits.float(), 1).half().view(
+                        g, len(x), -1).cpu().numpy()
             for i in range(g):
                 pi = p[i]
                 accs.append(accuracy_score(y_np, pi))
@@ -196,6 +251,8 @@ def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256):
         metrics[f'recall_snr_{key}'] = [
             round(float(v) * 100, 2) for v in np.mean(recalls, axis=0)]
         correctness[f'snr_{key}'] = np.stack(rows, axis=0)
+    if want_probs:
+        return metrics, correctness, probs_out
     return metrics, correctness
 
 
@@ -218,10 +275,22 @@ def run_job(job: dict, cfg: dict, device) -> dict:
     _reset_peak_memory(device)
     train_stats = train_model(model, xtr, ytr, cfg, device)
     secs = train_stats['secs']
+    if cfg.get('save_state'):
+        from pathlib import Path
+        stem = (f"{job['dataset']}_{job['split']}_{job['model']}_"
+                f"{job['cond']}_seed{job['seed']}")
+        state_dir = Path(cfg.get('state_dir') or '.')
+        state_dir.mkdir(parents=True, exist_ok=True)
+        torch.save(model.state_dict(), state_dir / f'{stem}.pt')
 
+    want_probs = bool(cfg.get('save_probs'))
     t_eval = time.time()
-    metrics, corr = evaluate(model, xte, yte, cfg['snrs'], cfg['draws'],
-                             seed_base=cfg['eval_seed'])
+    out = evaluate(model, xte, yte, cfg['snrs'], cfg['draws'],
+                   seed_base=cfg['eval_seed'],
+                   micro_batch=cfg.get('micro_batch'),
+                   want_probs=want_probs)
+    metrics, corr = out[0], out[1]
+    probs = out[2] if want_probs else {}
     eval_secs = round(time.time() - t_eval, 1)
     eval_windows = (len(xte) * (1 + len(cfg['snrs']) * cfg['draws'])
                     * (1 + len(cfg['bn_snrs'])))
@@ -252,25 +321,29 @@ def run_job(job: dict, cfg: dict, device) -> dict:
     arrays = {'y_test': yte.cpu().numpy().astype(np.int8)}
     for key, value in corr.items():
         arrays[f'pre_{key}'] = value
+    for key, value in probs.items():
+        arrays[f'prob_{key}'] = value
 
     for bank_snr in cfg['bn_snrs']:
         bank = 'clean' if bank_snr is None else f'{bank_snr:g}'
         if bank_snr is None:
-            recalibrate_bn(model, xtr)
+            recalibrate_bn(model, xtr, batch=64, seed=cfg['eval_seed'])
         else:
-            gen = torch.Generator(device=device).manual_seed(
-                cfg['eval_seed'] + int(round((bank_snr + 20) * 100)))
-            noise = torch.randn(xtr.shape, generator=gen, dtype=xtr.dtype,
-                                device=device)
-            p = xtr.pow(2).mean(dim=2, keepdim=True).sqrt()
-            sigma = p / (10 ** (bank_snr / 20.0))
-            recalibrate_bn(model, xtr + noise * sigma)
+            noisy = add_noise_group(xtr, float(bank_snr), 0, 1,
+                                    cfg['eval_seed'])
+            recalibrate_bn(model, noisy, batch=64, seed=cfg['eval_seed'])
         bank_metrics, bank_corr = evaluate(
             model, xte, yte, cfg['snrs'], cfg['draws'],
-            seed_base=cfg['eval_seed'])
+            seed_base=cfg['eval_seed'],
+            micro_batch=cfg.get('micro_batch'))
         payload[f'bn_{bank}'] = bank_metrics
         for key, value in bank_corr.items():
             arrays[f'bn_{bank}_{key}'] = value
+
+    # Self-calibration control: a clean-trained model re-estimated on clean
+    # data must not move.  Anything beyond +-0.5 means the BN chain is biased.
+    payload['bn_self_delta'] = round(
+        payload['bn_clean']['acc_clean'] - payload['pre']['acc_clean'], 2)
 
     payload['eval_secs'] = round(time.time() - t_eval, 1)
     payload['eval_windows'] = int(eval_windows)

@@ -41,10 +41,39 @@ def features(x: np.ndarray) -> np.ndarray:
 
 
 def add_noise_np(x: np.ndarray, snr_db: float, seed: int) -> np.ndarray:
-    rng = np.random.default_rng(seed)
-    rms = np.sqrt((x ** 2).mean(axis=1, keepdims=True))
+    """Single-draw noise for calibrating the level estimator."""
+    import torch
+    xt = torch.from_numpy(np.asarray(x, dtype=np.float32))
+    gen = torch.Generator().manual_seed(int(seed))
+    noise = torch.randn(xt.shape, generator=gen, dtype=torch.float32)
+    rms = xt.pow(2).mean(dim=2, keepdim=True).sqrt()
     sigma = rms / (10 ** (snr_db / 20.0))
-    return x + rng.standard_normal(x.shape) * sigma
+    return (xt + noise * sigma).numpy()
+
+
+def add_noise_draw(x: np.ndarray, snr_db: float, draw: int, draws: int,
+                   seed_base: int) -> np.ndarray:
+    """Replay the exact draw the engine used for ``(snr_db, draw)``.
+
+    The engine stacks ``g`` draws into one tensor before adding noise, so the
+    RNG stream depends on the group, not on the individual draw.  Reproducing
+    the group and slicing it is the only way to compare switch decisions with
+    per-window correctness.
+    """
+    import torch
+    from engine import noise_seed
+    n = x.shape[0]
+    g = max(1, min(int(draws), 8192 // max(n, 1)))
+    d0 = (int(draw) // g) * g
+    xt = torch.from_numpy(np.asarray(x, dtype=np.float32))
+    xs = xt.repeat(g, 1, 1) if g > 1 else xt
+    gen = torch.Generator().manual_seed(
+        noise_seed(int(seed_base), float(snr_db), d0))
+    noise = torch.randn(xs.shape, generator=gen, dtype=torch.float32)
+    rms = xs.pow(2).mean(dim=2, keepdim=True).sqrt()
+    sigma = rms / (10 ** (snr_db / 20.0))
+    noisy = (xs + noise * sigma).numpy()
+    return noisy[(int(draw) - d0) * n:(int(draw) - d0 + 1) * n]
 
 
 def calibrate(xtr: np.ndarray, snrs, eval_seed: int):
@@ -97,9 +126,7 @@ def prepared(dataset: str, split_name: str, snrs, draws: int,
     for snr in snrs:
         rows = []
         for d in range(draws):
-            noisy = add_noise_np(
-                xte, float(snr),
-                eval_seed + int(round((snr + 20) * 100)) + d)
+            noisy = add_noise_draw(xte, float(snr), d, draws, eval_seed)
             rows.append(estimate(features(noisy), cal))
         est[f'{snr:g}'] = np.stack(rows)
     if len(_CACHE) >= 3:
