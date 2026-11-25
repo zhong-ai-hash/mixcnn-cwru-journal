@@ -15,19 +15,19 @@
  "window": 4096,
  "stride": 4096,
  "duration_ms": 81.9,
- "max_per_file": 50,
+ "max_per_file": 0,
  "detrend": false,
- "n_windows": 600,
+ "n_windows": 2196,
  "class_counts": [
-  150,
-  150,
-  150,
-  150
+  1098,
+  366,
+  366,
+  366
  ],
  "speed_counts": {
-  "600": 200,
-  "800": 200,
-  "1000": 200
+  "600": 732,
+  "800": 732,
+  "1000": 732
  },
  "files": [
   {
@@ -38,7 +38,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   },
   {
    "file": "ib600_2.csv",
@@ -48,7 +48,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   },
   {
    "file": "ib800_2.csv",
@@ -58,7 +58,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   },
   {
    "file": "n1000_3_2.csv",
@@ -68,7 +68,7 @@
    "seconds": 30.03,
    "columns": 1,
    "windows_available": 366,
-   "windows_used": 50
+   "windows_used": 366
   },
   {
    "file": "n600_3_2.csv",
@@ -78,7 +78,7 @@
    "seconds": 30.03,
    "columns": 1,
    "windows_available": 366,
-   "windows_used": 50
+   "windows_used": 366
   },
   {
    "file": "n800_3_2.csv",
@@ -88,7 +88,7 @@
    "seconds": 30.03,
    "columns": 1,
    "windows_available": 366,
-   "windows_used": 50
+   "windows_used": 366
   },
   {
    "file": "ob1000_2.csv",
@@ -98,7 +98,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   },
   {
    "file": "ob600_2.csv",
@@ -108,7 +108,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   },
   {
    "file": "ob800_2.csv",
@@ -118,7 +118,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   },
   {
    "file": "tb1000_2.csv",
@@ -128,7 +128,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   },
   {
    "file": "tb600_2.csv",
@@ -138,7 +138,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   },
   {
    "file": "tb800_2.csv",
@@ -148,7 +148,7 @@
    "seconds": 10.01,
    "columns": 1,
    "windows_available": 122,
-   "windows_used": 50
+   "windows_used": 122
   }
  ],
  "note": "4096 samples at 50 kHz gives 82 ms, matching the 85 ms CWRU window; native bandwidth is preserved."

@@ -7,7 +7,7 @@
 | 文件 | 形状 | 说明 |
 |---|---|---|
 | `cwru_raw_windows.npz` | X (2000, 1024) | CWRU 10 类，40 条录音 × 50 窗，12 kHz |
-| `jnu_windows.npz` | X (600, 4096) | JNU 4 类，600/800/1000 rpm，50 kHz |
+| `jnu_windows.npz` | X (2196, 4096) | JNU 4 类，600/800/1000 rpm，50 kHz，全部非重叠窗 |
 | `paderborn_windows.npz` | X (13896, 4096) | Paderborn 3 类，29 轴承 × 20 记录 × 24 窗，64 kHz |
 | `seu_gear_windows.npz` | X (5616, 1024) | SEU 齿轮箱 3 类，936 样本 × 6 窗 |
 

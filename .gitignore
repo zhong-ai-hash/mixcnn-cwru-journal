@@ -10,3 +10,5 @@ Thumbs.db
 results/gpu/**/preds/
 results/gpu/**/logs/
 data/*_raw/
+data/journal/jnu_windows_max50.npz
+data/journal/jnu_meta_max50.json

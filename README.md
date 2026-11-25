@@ -29,7 +29,7 @@ paper/             manuscript placeholder
 | File | Windows | Classes | Sampling | Split unit |
 |---|---:|---:|---|---|
 | `cwru_raw_windows.npz` | 2,000 | 10 | 12 kHz, 1024 pt | recording (`rec_id`) |
-| `jnu_windows.npz` | 600 | 4 | 50 kHz, 4096 pt | speed / recording |
+| `jnu_windows.npz` | 2,196 | 4 | 50 kHz, 4096 pt | speed / recording |
 | `paderborn_windows.npz` | 13,896 | 3 | 64 kHz, 4096 pt | bearing / file |
 | `seu_gear_windows.npz` | 5,616 | 3 | not documented | original sample |
 
