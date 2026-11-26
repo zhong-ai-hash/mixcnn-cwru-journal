@@ -30,7 +30,7 @@ Output
 
 Usage
 -----
-    python raw_jnu.py --max-per-file 50
+    python raw_jnu.py --max-per-file 122
     python raw_jnu.py --dry-run
 """
 from __future__ import annotations
@@ -89,7 +89,7 @@ def main() -> None:
     ap.add_argument('--window', type=int, default=4096)
     ap.add_argument('--stride', type=int, default=None,
                     help='default: non-overlapping, equals --window')
-    ap.add_argument('--max-per-file', type=int, default=50)
+    ap.add_argument('--max-per-file', type=int, default=122)
     ap.add_argument('--detrend', action='store_true')
     ap.add_argument('--dry-run', action='store_true')
     args = ap.parse_args()

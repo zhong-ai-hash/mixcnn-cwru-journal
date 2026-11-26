@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 from sklearn.metrics import accuracy_score, f1_score
 
-from common import amp_enabled, seed_all
+from common import amp_enabled, config_stamp, seed_all
 
 
 def auto_batch(base: int, length: int) -> int:
@@ -182,16 +182,25 @@ def recalibrate_bn(model, x, batch=64, seed=50000, passes=2):
     at batch 64 mix recordings and shrink the sampling error of the variance.
     """
     reset_bn(model)
-    model.train()
-    gen = torch.Generator().manual_seed(int(seed))
-    for _ in range(int(passes)):
-        perm = torch.randperm(len(x), generator=gen).to(x.device)
-        for i in range(0, len(x), batch):
-            idx = perm[i:i + batch]
-            if len(idx) < 2:
-                continue
-            model(x[idx])
+    was_training = model.training
+    # Only BN layers may consume batch statistics here.  Keeping dropout and
+    # other stochastic modules in eval mode matters for the TCN/Transformer
+    # baselines even though MIXCNN itself has no dropout.
     model.eval()
+    for m in model.modules():
+        if isinstance(m, nn.BatchNorm1d):
+            m.train()
+    gen = torch.Generator().manual_seed(int(seed))
+    try:
+        for _ in range(int(passes)):
+            perm = torch.randperm(len(x), generator=gen).to(x.device)
+            for i in range(0, len(x), batch):
+                idx = perm[i:i + batch]
+                if len(idx) < 2:
+                    continue
+                model(x[idx])
+    finally:
+        model.train(was_training)
 
 
 @torch.no_grad()
@@ -227,15 +236,16 @@ def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256,
     group = max(1, min(draws, 8192 // max(len(x), 1)))
     for snr in snrs:
         accs, f1s, recalls, rows = [], [], [], []
+        prob_chunks = [] if want_probs else None
         for d0 in range(0, draws, group):
             g = min(group, draws - d0)
             xs = add_noise_group(x, float(snr), d0, g, seed_base)
             draw_logits = predict_logits(model, xs, batch, micro_batch)
             p = draw_logits.argmax(1).view(g, len(x)).cpu().numpy()
             if want_probs:
-                probs_out[f'snr_{snr:g}'] = torch.softmax(
+                prob_chunks.append(torch.softmax(
                     draw_logits.float(), 1).half().view(
-                        g, len(x), -1).cpu().numpy()
+                        g, len(x), -1).cpu().numpy())
             for i in range(g):
                 pi = p[i]
                 accs.append(accuracy_score(y_np, pi))
@@ -244,6 +254,8 @@ def evaluate(model, x, y, snrs, draws, seed_base=50000, batch=256,
                 recalls.append(np.diag(confusion_matrix(
                     y_np, pi, labels=labels)) / counts)
                 rows.append((pi == y_np).astype(np.int8))
+        if want_probs:
+            probs_out[f'snr_{snr:g}'] = np.concatenate(prob_chunks, axis=0)
         key = f'{snr:g}'
         metrics[f'acc_snr_{key}'] = round(float(np.mean(accs)) * 100, 2)
         metrics[f'std_snr_{key}'] = round(float(np.std(accs)) * 100, 2)
@@ -296,13 +308,7 @@ def run_job(job: dict, cfg: dict, device) -> dict:
                     * (1 + len(cfg['bn_snrs'])))
     payload = {
         **job,
-        'cfg_stamp': {
-            'epochs': int(cfg['epochs']), 'batch': int(cfg['batch']),
-            'lr': float(cfg['lr']), 'draws': int(cfg['draws']),
-            'snrs': [float(v) for v in cfg['snrs']],
-            'bn_banks': ['clean' if v is None else f'{v:g}'
-                         for v in cfg['bn_snrs']],
-        },
+        'cfg_stamp': config_stamp(cfg),
         'n_train': int(len(xtr)), 'n_test': int(len(xte)),
         'n_classes': n_classes,
         'params': n_params(model), 'train_secs': secs,
@@ -324,14 +330,15 @@ def run_job(job: dict, cfg: dict, device) -> dict:
     for key, value in probs.items():
         arrays[f'prob_{key}'] = value
 
+    cal_seed = int(cfg['eval_seed']) + 100000
     for bank_snr in cfg['bn_snrs']:
         bank = 'clean' if bank_snr is None else f'{bank_snr:g}'
         if bank_snr is None:
-            recalibrate_bn(model, xtr, batch=64, seed=cfg['eval_seed'])
+            recalibrate_bn(model, xtr, batch=64, seed=cal_seed)
         else:
             noisy = add_noise_group(xtr, float(bank_snr), 0, 1,
-                                    cfg['eval_seed'])
-            recalibrate_bn(model, noisy, batch=64, seed=cfg['eval_seed'])
+                                    cal_seed)
+            recalibrate_bn(model, noisy, batch=64, seed=cal_seed)
         bank_metrics, bank_corr = evaluate(
             model, xte, yte, cfg['snrs'], cfg['draws'],
             seed_base=cfg['eval_seed'],
@@ -340,10 +347,20 @@ def run_job(job: dict, cfg: dict, device) -> dict:
         for key, value in bank_corr.items():
             arrays[f'bn_{bank}_{key}'] = value
 
-    # Self-calibration control: a clean-trained model re-estimated on clean
-    # data must not move.  Anything beyond +-0.5 means the BN chain is biased.
-    payload['bn_self_delta'] = round(
-        payload['bn_clean']['acc_clean'] - payload['pre']['acc_clean'], 2)
+    # Self-calibration control: only clean-trained weights re-estimated on
+    # clean data should stay within +-0.5.  Noise-trained weights are expected
+    # to move and are recorded descriptively, not as a pass/fail assertion.
+    if 'bn_clean' in payload:
+        payload['bn_self_delta'] = round(
+            payload['bn_clean']['acc_clean'] - payload['pre']['acc_clean'], 2)
+        payload['bn_self_delta_control'] = (job['cond'] == 'clean')
+        payload['bn_self_delta_note'] = (
+            'valid clean-weights control; expected within +-0.5 points'
+            if job['cond'] == 'clean' else
+            'descriptive only; noise-trained weights need not match pre')
+    else:
+        payload['bn_self_delta_control'] = False
+        payload['bn_self_delta_note'] = 'not available: BN banks skipped'
 
     payload['eval_secs'] = round(time.time() - t_eval, 1)
     payload['eval_windows'] = int(eval_windows)

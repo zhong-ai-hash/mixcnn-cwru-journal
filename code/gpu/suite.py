@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
-from common import RESULTS, json_dump
+from common import RESULTS, config_stamp, json_dump
 from engine import run_job
 from models import ALL_MODELS, BASELINES, MIXCNN
 
@@ -81,15 +81,7 @@ def job_id(job: dict) -> str:
 
 def cfg_stamp(cfg: dict) -> dict:
     """Identify the evaluation protocol so stale runs are never reused."""
-    return {
-        'epochs': int(cfg['epochs']), 'batch': int(cfg['batch']),
-        'lr': float(cfg['lr']), 'draws': int(cfg['draws']),
-        'snrs': [float(v) for v in cfg['snrs']],
-        'bn_banks': ['clean' if v is None else f'{v:g}'
-                     for v in cfg['bn_snrs']],
-        'micro_batch': (int(cfg['micro_batch'])
-                        if cfg.get('micro_batch') else None),
-    }
+    return config_stamp(cfg)
 
 
 def _worker(job: dict, cfg: dict, out_dir: str) -> str:

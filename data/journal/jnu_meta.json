@@ -15,19 +15,19 @@
  "window": 4096,
  "stride": 4096,
  "duration_ms": 81.9,
- "max_per_file": 0,
+ "max_per_file": 122,
  "detrend": false,
- "n_windows": 2196,
+ "n_windows": 1464,
  "class_counts": [
-  1098,
+  366,
   366,
   366,
   366
  ],
  "speed_counts": {
-  "600": 732,
-  "800": 732,
-  "1000": 732
+  "600": 488,
+  "800": 488,
+  "1000": 488
  },
  "files": [
   {
@@ -68,7 +68,7 @@
    "seconds": 30.03,
    "columns": 1,
    "windows_available": 366,
-   "windows_used": 366
+   "windows_used": 122
   },
   {
    "file": "n600_3_2.csv",
@@ -78,7 +78,7 @@
    "seconds": 30.03,
    "columns": 1,
    "windows_available": 366,
-   "windows_used": 366
+   "windows_used": 122
   },
   {
    "file": "n800_3_2.csv",
@@ -88,7 +88,7 @@
    "seconds": 30.03,
    "columns": 1,
    "windows_available": 366,
-   "windows_used": 366
+   "windows_used": 122
   },
   {
    "file": "ob1000_2.csv",

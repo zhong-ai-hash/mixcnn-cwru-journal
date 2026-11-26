@@ -7,7 +7,7 @@
 | 文件 | 形状 | 说明 |
 |---|---|---|
 | `cwru_raw_windows.npz` | X (2000, 1024) | CWRU 10 类，40 条录音 × 50 窗，12 kHz |
-| `jnu_windows.npz` | X (2196, 4096) | JNU 4 类，600/800/1000 rpm，50 kHz，全部非重叠窗 |
+| `jnu_windows.npz` | X (1464, 4096) | JNU 4 类，600/800/1000 rpm，50 kHz，每文件 122 窗 |
 | `paderborn_windows.npz` | X (13896, 4096) | Paderborn 3 类，29 轴承 × 20 记录 × 24 窗，64 kHz |
 | `seu_gear_windows.npz` | X (5616, 1024) | SEU 齿轮箱 3 类，936 样本 × 6 窗 |
 
@@ -27,8 +27,8 @@
 # CWRU：需要原始 .mat 目录
 python code/journal/raw_cwru.py --raw-dir <CWRU_RAW>
 
-# JNU：需要原始 CSV 目录
-python code/journal/raw_jnu.py --src-dir <JNU_RAW>
+# JNU：原始 CSV 放在 data/journal/jnu，再按每文件 122 窗平衡生成
+python code/journal/raw_jnu.py --max-per-file 122
 
 # Paderborn：默认自动找 Paper_X1/data/paderborn_raw
 python code/journal/raw_paderborn.py --per-file 24 --mode 3class

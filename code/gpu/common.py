@@ -49,6 +49,22 @@ def json_dump(path: Path, payload) -> None:
     tmp.replace(path)
 
 
+def config_stamp(cfg: dict) -> dict:
+    """Identify the evaluation protocol so stale runs are never reused."""
+    return {
+        'epochs': int(cfg['epochs']), 'batch': int(cfg['batch']),
+        'lr': float(cfg['lr']), 'draws': int(cfg['draws']),
+        'snrs': [float(v) for v in cfg['snrs']],
+        'bn_banks': ['clean' if v is None else f'{v:g}'
+                     for v in cfg['bn_snrs']],
+        'eval_seed': int(cfg['eval_seed']),
+        'micro_batch': (int(cfg['micro_batch'])
+                        if cfg.get('micro_batch') else None),
+        'save_state': bool(cfg.get('save_state')),
+        'save_probs': bool(cfg.get('save_probs')),
+    }
+
+
 class Timer:
     def __init__(self):
         self.t0 = time.time()
